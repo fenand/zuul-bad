@@ -14,12 +14,12 @@
  */
 public class Room 
 {
-    public String description;
-    public Room northExit;
-    public Room southExit;
-    public Room eastExit;
-    public Room westExit;
-    public Room southeastExit;
+    private String description;
+    private Room northExit;
+    private Room southExit;
+    private Room eastExit;
+    private Room westExit;
+    private Room southeastExit;
 
     /**
      * Create a room described "description". Initially, it has
@@ -63,4 +63,60 @@ public class Room
         return description;
     }
 
+    /**
+     * Metodo denominado getExit que tome como parámetro una cadena que represente una dirección y devuelva el objeto de la clase Room asociado a esa salida o 
+     * null si no existe esa salida en dicha ubicación.
+     * 
+     * @param tiene como parametro un String
+     * @return objeto de la clase Room asociado a esa salida o null si no existe esa salida en dicha ubicación
+     */
+    public Room getExit(String direccion){
+        Room roomADevolver = null;
+        if(direccion.equals("north")){
+            roomADevolver = northExit;
+        }
+        if(direccion.equals("east")){
+            roomADevolver = eastExit;
+        }
+        if(direccion.equals("south")){
+            roomADevolver = southExit;
+        }
+        if(direccion.equals("west")){
+            roomADevolver = westExit;
+        }
+        if(direccion.equals("southeast")){
+            roomADevolver = southeastExit;
+        }
+
+        return roomADevolver;
+    }
+
+    /**
+     * Return a description of the room's exits.
+     * For example: "Exits: north east west southeast "
+     *
+     * @ return descripcion de las salidas en la habitacion en la que estamos.
+     */
+    public String getExitString(){
+        String salidaDescripcion = "Salidas: ";
+        
+        if(northExit != null) {
+            System.out.print("north ");
+        }
+        if(eastExit != null) {
+            System.out.print("east ");
+        }
+        if(southExit != null) {
+            System.out.print("south ");
+        }
+        if(westExit != null) {
+            System.out.print("west ");
+        }
+        if(southeastExit != null) {
+            System.out.print("southeast ");
+        }
+        System.out.println();
+        
+        return salidaDescripcion;
+    }
 }

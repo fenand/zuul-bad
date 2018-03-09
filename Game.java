@@ -169,25 +169,31 @@ public class Game
             return;
         }
 
-        String direction = command.getSecondWord();
+        String direccion = command.getSecondWord();
 
         // Try to leave current room.
-        Room nextRoom = null;
-        if(direction.equals("north")) {
-            nextRoom = currentRoom.northExit;
-        }
-        if(direction.equals("east")) {
-            nextRoom = currentRoom.eastExit;
-        }
-        if(direction.equals("south")) {
-            nextRoom = currentRoom.southExit;
-        }
-        if(direction.equals("west")) {
-            nextRoom = currentRoom.westExit;
-        }
-        if(direction.equals("southeast")) {
-            nextRoom = currentRoom.southeastExit;
-        }
+
+        //puedo borrar el null que el geter ya lo usa si no hay nada en esa dirreccion
+        // // Room nextRoom = null;
+        //modificacion y simplidficado de esta parte del codigo
+
+        // // if(direction.equals("north")) {
+        // // nextRoom = currentRoom.northExit;
+        // // }
+        // // if(direction.equals("east")) {
+        // // nextRoom = currentRoom.eastExit;
+        // // }
+        // // if(direction.equals("south")) {
+        // // nextRoom = currentRoom.southExit;
+        // // }
+        // // if(direction.equals("west")) {
+        // // nextRoom = currentRoom.westExit;
+        // // }
+        // // if(direction.equals("southeast")) {
+        // // nextRoom = currentRoom.southeastExit;
+        // // }
+
+        Room nextRoom = currentRoom.getExit(direccion);
 
         if (nextRoom == null) {
             System.out.println("There is no door!");
@@ -218,25 +224,9 @@ public class Game
      * nuevo metodo privado para evitar la repeticion de codigo entre printwelcome y goRoom
      */
     private void printLocationInfo(){
-        // modificado el string You are antes de currentRoom.getDescription()
+
         System.out.println("You are " + currentRoom.getDescription());
-        System.out.print("Salidas: ");
-        if(currentRoom.northExit != null) {
-            System.out.print("north ");
-        }
-        if(currentRoom.eastExit != null) {
-            System.out.print("east ");
-        }
-        if(currentRoom.southExit != null) {
-            System.out.print("south ");
-        }
-        if(currentRoom.westExit != null) {
-            System.out.print("west ");
-        }
-        if(currentRoom.southeastExit != null) {
-            System.out.print("southeast ");
-        }
-        System.out.println();
+        System.out.println(currentRoom.getExitString());
 
     }
 }
