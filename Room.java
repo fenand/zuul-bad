@@ -20,6 +20,7 @@ public class Room
     private Room eastExit;
     private Room westExit;
     private Room southeastExit;
+    private Room northwestExit;
 
     /**
      * Create a room described "description". Initially, it has
@@ -41,7 +42,7 @@ public class Room
      * @param west The west exit.
      * @param southeast The southeast exit.
      */
-    public void setExits(Room north, Room east, Room south, Room west, Room southeast) 
+    public void setExits(Room north, Room east, Room south, Room west, Room southeast ,Room northwest) 
     {
         if(north != null)
             northExit = north;
@@ -52,7 +53,9 @@ public class Room
         if(west != null)
             westExit = west;
         if( southeast != null)
-            southeastExit = southeast;   
+            southeastExit = southeast; 
+        if( northwest != null)
+            northwestExit = northwest;
     }
 
     /**
@@ -72,6 +75,7 @@ public class Room
      */
     public Room getExit(String direccion){
         Room roomADevolver = null;
+        
         if(direccion.equals("north")){
             roomADevolver = northExit;
         }
@@ -87,6 +91,9 @@ public class Room
         if(direccion.equals("southeast")){
             roomADevolver = southeastExit;
         }
+        if(direccion.equals("northwest")){
+            roomADevolver = northwestExit;
+        }
 
         return roomADevolver;
     }
@@ -99,7 +106,7 @@ public class Room
      */
     public String getExitString(){
         String salidaDescripcion = "Salidas: ";
-        
+
         if(northExit != null) {
             System.out.print("north ");
         }
@@ -115,8 +122,11 @@ public class Room
         if(southeastExit != null) {
             System.out.print("southeast ");
         }
+        if(northwestExit != null) {
+            System.out.print("northwest ");
+        }
         System.out.println();
-        
+
         return salidaDescripcion;
     }
 }
