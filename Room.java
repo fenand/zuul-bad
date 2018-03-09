@@ -9,8 +9,8 @@
  * east, south, west.  For each direction, the room stores a reference
  * to the neighboring room, or null if there is no exit in that direction.
  * 
- * @author  Michael Kölling and David J. Barnes
- * @version 2011.07.31
+ * @author  Michael Kölling and David J. Barnes y fernando
+ * @version 09/03/2018
  */
 public class Room 
 {
@@ -19,6 +19,7 @@ public class Room
     public Room southExit;
     public Room eastExit;
     public Room westExit;
+    public Room southeastExit;
 
     /**
      * Create a room described "description". Initially, it has
@@ -38,8 +39,9 @@ public class Room
      * @param east The east east.
      * @param south The south exit.
      * @param west The west exit.
+     * @param southeast The southeast exit.
      */
-    public void setExits(Room north, Room east, Room south, Room west) 
+    public void setExits(Room north, Room east, Room south, Room west, Room southeast) 
     {
         if(north != null)
             northExit = north;
@@ -49,6 +51,8 @@ public class Room
             southExit = south;
         if(west != null)
             westExit = west;
+        if( southeast != null)
+            southeastExit = southeast;   
     }
 
     /**

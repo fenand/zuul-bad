@@ -57,20 +57,20 @@ public class Game
         // // office = new Room("in the computing admin office");
 
         // // initialise room exits
-        //                   Room north, Room east,  Room south,  Room west  
-        // exterior.setExits(null,       null,       null,        null);
+        //                   Room north, Room east,  Room south,  Room west  Room southeast
+        // exterior.setExits(null,       null,       null,        null          null    );
 
         //exterior,foso1, foso2, muralla, patio, salones, aposentos, torreon1, torreon2, mazmorras
-        exterior.setExits(null, null, muralla, null);
-        foso1.setExits(null, muralla, null, null);
-        foso2.setExits(null, null, null, muralla);
-        muralla.setExits(exterior, foso2, patio, foso1);
-        patio.setExits(muralla, aposentos, mazmorras, salones);
-        salones.setExits(null, patio, torreon1, null);
-        aposentos.setExits(null, null, torreon2, patio);
-        torreon1.setExits(salones, torreon2, null, null);
-        torreon2.setExits(aposentos, null, null, torreon1);
-        mazmorras.setExits(patio, null, null, null);
+        exterior.setExits(null, null, muralla, null,foso2); //salida sureste foso2
+        foso1.setExits(null, muralla, null, null,null);
+        foso2.setExits(null, null, null, muralla,null);
+        muralla.setExits(exterior, foso2, patio, foso1,null);
+        patio.setExits(muralla, aposentos, mazmorras, salones,torreon2); // salida sureste torreon2
+        salones.setExits(null, patio, torreon1, null,null);
+        aposentos.setExits(null, null, torreon2, patio,null);
+        torreon1.setExits(salones, torreon2, null, null,null);
+        torreon2.setExits(aposentos, null, null, torreon1,null);
+        mazmorras.setExits(patio, null, null, null,null);
 
         // // outside.setExits(null, theater, lab, pub);
         // // theater.setExits(null, null, null, outside);
@@ -185,6 +185,9 @@ public class Game
         if(direction.equals("west")) {
             nextRoom = currentRoom.westExit;
         }
+        if(direction.equals("southeast")) {
+            nextRoom = currentRoom.southeastExit;
+        }
 
         if (nextRoom == null) {
             System.out.println("There is no door!");
@@ -229,6 +232,9 @@ public class Game
         }
         if(currentRoom.westExit != null) {
             System.out.print("west ");
+        }
+        if(currentRoom.southeastExit != null) {
+            System.out.print("southeast ");
         }
         System.out.println();
 
