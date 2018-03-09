@@ -17,7 +17,7 @@ import java.util.HashMap;
 public class Room 
 {
     private String description;
-    
+
     // creamos un hashmap y eliminamos los atributos anteriores
     private HashMap<String, Room> salidas;
     // private Room northExit;
@@ -26,7 +26,6 @@ public class Room
     // private Room westExit;
     // private Room southeastExit;
     // private Room northwestExit;
-    
 
     /**
      * Create a room described "description". Initially, it has
@@ -37,35 +36,46 @@ public class Room
     public Room(String description) 
     {
         this.description = description;
-        
+
         //inicializamos el hashmap
         salidas = new HashMap<>();
     }
 
     /**
-     * Define the exits of this room.  Every direction either leads
-     * to another room or is null (no exit there).
-     * @param north The north exit.
-     * @param east The east east.
-     * @param south The south exit.
-     * @param west The west exit.
-     * @param southeast The southeast exit.
+     * Define an exit from this room.
+     * @param direccion The direction of the exit.
+     * @param habitacion The room in the given direction.
      */
-    public void setExits(Room north, Room east, Room south, Room west, Room southeast ,Room northwest) 
-    {
-        if(north != null)
-            salidas.put("north",north);
-        if(east != null)
-            salidas.put("east",east);
-        if(south != null)
-           salidas.put("south",south);
-        if(west != null)
-            salidas.put("west",west);
-        if( southeast != null)
-            salidas.put("southeast",southeast);
-        if( northwest != null)
-            salidas.put("northwest",northwest);
+    public void setExit(String direccion, Room habitacion){
+
+        salidas.put(direccion, habitacion);
+
     }
+
+    // /**
+    // * Define the exits of this room.  Every direction either leads
+    // * to another room or is null (no exit there).
+    // * @param north The north exit.
+    // * @param east The east east.
+    // * @param south The south exit.
+    // * @param west The west exit.
+    // * @param southeast The southeast exit.
+    // */
+    // public void setExits(Room north, Room east, Room south, Room west, Room southeast ,Room northwest) 
+    // {
+    // if(north != null)
+    // salidas.put("north",north);
+    // if(east != null)
+    // salidas.put("east",east);
+    // if(south != null)
+    // salidas.put("south",south);
+    // if(west != null)
+    // salidas.put("west",west);
+    // if( southeast != null)
+    // salidas.put("southeast",southeast);
+    // if( northwest != null)
+    // salidas.put("northwest",northwest);
+    // }
 
     /**
      * @return The description of the room.
@@ -84,7 +94,7 @@ public class Room
      */
     public Room getExit(String direccion){
         Room roomADevolver = null;
-        
+
         if(direccion.equals("north")){
             roomADevolver = salidas.get("north");
         }
@@ -114,28 +124,29 @@ public class Room
      * @ return descripcion de las salidas en la habitacion en la que estamos.
      */
     public String getExitString(){
+        
         String salidaDescripcion = "Salidas: ";
-
+        
+   
         if(salidas.get("north") != null) {
-            System.out.print("north ");
+            salidaDescripcion += "north ";
         }
         if(salidas.get("east") != null) {
-            System.out.print("east ");
+            salidaDescripcion += "east ";
         }
         if(salidas.get("south") != null) {
-            System.out.print("south ");
+            salidaDescripcion += "south ";
         }
         if(salidas.get("west") != null) {
-            System.out.print("west ");
+            salidaDescripcion += "west ";
         }
         if(salidas.get("southeast") != null) {
-            System.out.print("southeast ");
+            salidaDescripcion += "southeast ";
         }
         if(salidas.get("northwest") != null) {
-            System.out.print("northwest ");
+            salidaDescripcion += "northwest ";
         }
-        System.out.println();
-
+       
         return salidaDescripcion;
     }
 }

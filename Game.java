@@ -36,7 +36,6 @@ public class Game
     {
         // //Room outside, theater, pub, lab, office;
         Room exterior,foso1, foso2, muralla, patio, salones, aposentos, torreon1, torreon2, mazmorras;
-        
         // // create the rooms
         exterior = new Room("parte exterior del castillo");
         foso1 = new Room("foso");
@@ -50,24 +49,54 @@ public class Game
         mazmorras = new Room(" la mazmorrra ");
 
         // // initialise room exits
-                      //Room north, Room east,  Room south,  Room west     Room southeast  Room northwest
-        // exterior.setExits(null,       null,       null,        null          null            null      );
-        
+        //Room north, Room east,  Room south,  Room west     Room southeast  Room northwest
         //exterior,foso1, foso2, muralla, patio, salones, aposentos, torreon1, torreon2, mazmorras
         
-        exterior.setExits(null, null, muralla, null,foso2,null); //salida sureste foso2
-        foso1.setExits(null, muralla, null, null,null,null);
-        foso2.setExits(null, null, null, muralla,null,exterior);
-        muralla.setExits(exterior, foso2, patio, foso1,null,null);
-        patio.setExits(muralla, aposentos, mazmorras, salones,torreon2,null); // salida sureste torreon2
-        salones.setExits(null, patio, torreon1, null,null,null);
-        aposentos.setExits(null, null, torreon2, patio,null,null);
-        torreon1.setExits(salones, torreon2, null, null,null,null);
-        torreon2.setExits(aposentos, null, null, torreon1,null,patio);
-        mazmorras.setExits(patio, null, null, null,null,null);
+        exterior.setExit("south", muralla);
+        exterior.setExit("southeast", foso2);
+        
+        foso1.setExit("east",muralla );
+        
+        foso2.setExit("west",muralla );
+        foso2.setExit("northwest", exterior);
+        
+        muralla.setExit("north", exterior);
+        muralla.setExit("east", foso2 );
+        muralla.setExit("south", patio);
+        muralla.setExit("west", foso1);
+        
+        patio.setExit("north",muralla );
+        patio.setExit("east",aposentos );
+        patio.setExit("south",mazmorras );
+        patio.setExit("west",salones );
+        patio.setExit("southeast",torreon2 );
+        
+        salones.setExit("south",torreon2 );
+        salones.setExit("east",patio );
+        
+        aposentos.setExit("west",patio );
+        aposentos.setExit("south",torreon2 );
+        
+        torreon1.setExit("north",aposentos );
+        torreon1.setExit("east",torreon2 );
+        torreon1.setExit("northwest",patio );
+        
+        mazmorras.setExit("north",patio );
+        
+        //exterior.setExits(null, null, muralla, null,foso2,null); //salida sureste foso2
+        // foso1.setExits(null, muralla, null, null,null,null);
+        // foso2.setExits(null, null, null, muralla,null,exterior);
+        // muralla.setExits(exterior, foso2, patio, foso1,null,null);
+        // patio.setExits(muralla, aposentos, mazmorras, salones,torreon2,null); // salida sureste torreon2
+        // salones.setExits(null, patio, torreon1, null,null,null);
+        // aposentos.setExits(null, null, torreon2, patio,null,null);
+        // torreon1.setExits(salones, torreon2, null, null,null,null);
+        // torreon2.setExits(aposentos, null, null, torreon1,null,patio);
+        // mazmorras.setExits(patio, null, null, null,null,null);
 
         // //currentRoom = outside;  // start game outside
         currentRoom = exterior; // comienzo del juego
+        System.out.println();
     }
 
     /**
@@ -139,7 +168,7 @@ public class Game
     private void printHelp() 
     {
         System.out.println("You are lost. You are alone. You wander");
-        System.out.println("around at the university.");
+        System.out.println("around at the castle.");
         System.out.println();
         System.out.println("Your command words are:");
         System.out.println("   go quit help");
@@ -162,6 +191,7 @@ public class Game
         // Try to leave current room.
 
         // // Room nextRoom = null;
+        
         //modificacion y simplificado de esta parte del codigo
         // // if(direction.equals("north")) {
         // // nextRoom = currentRoom.northExit;
@@ -186,7 +216,9 @@ public class Game
         }
         else {
             currentRoom = nextRoom;
+            
             printLocationInfo();
+            System.out.println();
         }
     }
 
@@ -210,9 +242,9 @@ public class Game
      * nuevo metodo privado para evitar la repeticion de codigo entre printwelcome y goRoom
      */
     private void printLocationInfo(){
-
-        System.out.println("You are " + currentRoom.getDescription());
-        System.out.println(currentRoom.getExitString());
-
+        System.out.println("You are " + currentRoom.getDescription());        
+        System.out.print(currentRoom.getExitString());   
+        System.out.println();
+        
     }
 }
