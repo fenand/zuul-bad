@@ -11,15 +11,15 @@
  *  rooms, creates the parser and starts the game.  It also evaluates and
  *  executes the commands that the parser returns.
  * 
- * @author  Michael Kölling and David J. Barnes
- * @version 2011.07.31
+ * @author  Michael Kölling and David J. Barnes Y fernando
+ * @version 09/03/2018
  */
 
 public class Game 
 {
     private Parser parser;
     private Room currentRoom;
-        
+
     /**
      * Create the game and initialise its internal map.
      */
@@ -34,23 +34,52 @@ public class Game
      */
     private void createRooms()
     {
-        Room outside, theater, pub, lab, office;
-      
-        // create the rooms
-        outside = new Room("outside the main entrance of the university");
-        theater = new Room("in a lecture theater");
-        pub = new Room("in the campus pub");
-        lab = new Room("in a computing lab");
-        office = new Room("in the computing admin office");
-        
-        // initialise room exits
-        outside.setExits(null, theater, lab, pub);
-        theater.setExits(null, null, null, outside);
-        pub.setExits(null, outside, null, null);
-        lab.setExits(outside, office, null, null);
-        office.setExits(null, null, null, lab);
+        // //Room outside, theater, pub, lab, office;
+        Room exterior,foso1, foso2, muralla, patio, salones, aposentos, torreon1, torreon2, mazmorras;
 
-        currentRoom = outside;  // start game outside
+        // // create the rooms
+
+        exterior = new Room("parte exterior del castillo");
+        foso1 = new Room("foso");
+        foso2 = new Room("foso ");
+        muralla = new Room("muralla del castillo");
+        patio = new Room("patio del castillo");
+        salones = new Room("salones del castillo");
+        aposentos = new Room("aposentos del rey");
+        torreon1 = new Room("primera torre");
+        torreon2 = new Room("segundo torreon");
+        mazmorras = new Room(" la mazmorrra ");
+
+        // // outside = new Room("outside the main entrance of the university");
+        // // theater = new Room("in a lecture theater");
+        // // pub = new Room("in the campus pub");
+        // // lab = new Room("in a computing lab");
+        // // office = new Room("in the computing admin office");
+
+        // // initialise room exits
+        //                   Room north, Room east,  Room south,  Room west  
+        // exterior.setExits(null,       null,       null,        null);
+
+        //exterior,foso1, foso2, muralla, patio, salones, aposentos, torreon1, torreon2, mazmorras
+        exterior.setExits(null, null, muralla, null);
+        foso1.setExits(null, muralla, null, null);
+        foso2.setExits(null, null, null, muralla);
+        muralla.setExits(exterior, foso2, patio, foso1);
+        patio.setExits(muralla, aposentos, mazmorras, salones);
+        salones.setExits(null, patio, torreon1, null);
+        aposentos.setExits(null, null, torreon2, patio);
+        torreon1.setExits(salones, torreon2, null, null);
+        torreon2.setExits(aposentos, null, null, torreon1);
+        mazmorras.setExits(patio, null, null, null);
+
+        // // outside.setExits(null, theater, lab, pub);
+        // // theater.setExits(null, null, null, outside);
+        // // pub.setExits(null, outside, null, null);
+        // // lab.setExits(outside, office, null, null);
+        // // office.setExits(null, null, null, lab);
+
+        // //currentRoom = outside;  // start game outside
+        currentRoom = exterior; // comienzo del juego
     }
 
     /**
@@ -62,7 +91,7 @@ public class Game
 
         // Enter the main command loop.  Here we repeatedly read commands and
         // execute them until the game is over.
-                
+
         boolean finished = false;
         while (! finished) {
             Command command = parser.getCommand();
@@ -81,6 +110,7 @@ public class Game
         System.out.println("World of Zuul is a new, incredibly boring adventure game.");
         System.out.println("Type 'help' if you need help.");
         System.out.println();
+        // modificado el string You are antes de currentRoom.getDescription()
         System.out.println("You are " + currentRoom.getDescription());
         System.out.print("Exits: ");
         if(currentRoom.northExit != null) {
@@ -176,6 +206,7 @@ public class Game
         }
         else {
             currentRoom = nextRoom;
+            // modificado el string You are antes de currentRoom.getDescription()
             System.out.println("You are " + currentRoom.getDescription());
             System.out.print("Exits: ");
             if(currentRoom.northExit != null) {
