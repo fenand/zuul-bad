@@ -36,9 +36,8 @@ public class Game
     {
         // //Room outside, theater, pub, lab, office;
         Room exterior,foso1, foso2, muralla, patio, salones, aposentos, torreon1, torreon2, mazmorras;
-
+        
         // // create the rooms
-
         exterior = new Room("parte exterior del castillo");
         foso1 = new Room("foso");
         foso2 = new Room("foso ");
@@ -50,17 +49,12 @@ public class Game
         torreon2 = new Room("segundo torreon");
         mazmorras = new Room(" la mazmorrra ");
 
-        // // outside = new Room("outside the main entrance of the university");
-        // // theater = new Room("in a lecture theater");
-        // // pub = new Room("in the campus pub");
-        // // lab = new Room("in a computing lab");
-        // // office = new Room("in the computing admin office");
-
         // // initialise room exits
-        //                   Room north, Room east,  Room south,  Room west  Room southeast  Room northwest
-        // exterior.setExits(null,       null,       null,        null          null            null);
-
+                      //Room north, Room east,  Room south,  Room west     Room southeast  Room northwest
+        // exterior.setExits(null,       null,       null,        null          null            null      );
+        
         //exterior,foso1, foso2, muralla, patio, salones, aposentos, torreon1, torreon2, mazmorras
+        
         exterior.setExits(null, null, muralla, null,foso2,null); //salida sureste foso2
         foso1.setExits(null, muralla, null, null,null,null);
         foso2.setExits(null, null, null, muralla,null,exterior);
@@ -71,12 +65,6 @@ public class Game
         torreon1.setExits(salones, torreon2, null, null,null,null);
         torreon2.setExits(aposentos, null, null, torreon1,null,patio);
         mazmorras.setExits(patio, null, null, null,null,null);
-
-        // // outside.setExits(null, theater, lab, pub);
-        // // theater.setExits(null, null, null, outside);
-        // // pub.setExits(null, outside, null, null);
-        // // lab.setExits(outside, office, null, null);
-        // // office.setExits(null, null, null, lab);
 
         // //currentRoom = outside;  // start game outside
         currentRoom = exterior; // comienzo del juego
@@ -173,10 +161,8 @@ public class Game
 
         // Try to leave current room.
 
-        //puedo borrar el null que el geter ya lo usa si no hay nada en esa dirreccion
         // // Room nextRoom = null;
-        //modificacion y simplidficado de esta parte del codigo
-
+        //modificacion y simplificado de esta parte del codigo
         // // if(direction.equals("north")) {
         // // nextRoom = currentRoom.northExit;
         // // }
