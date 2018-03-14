@@ -140,6 +140,11 @@ public class Game
         else if(commandWord.equals("look")){
             look();
         }
+
+        else if(commandWord.equals("eat"))
+        {
+            eat();
+        }
         return wantToQuit;
     }
 
@@ -221,10 +226,20 @@ public class Game
     private void printLocationInfo(){ 
         System.out.println(currentRoom.getLongDescription());  //metodo nuevo creado en room     
     }
+
     /**
      * Metodo que imprime por pantalla la informacion que esta el metodo printLocationInfo()
      */
     private void look(){
         printLocationInfo();
+    }
+
+    /**
+     * Metodo para añadir el comando eat (comer) que, al ejecutarse, 
+     * se limite a imprimir el mensaje "You have eaten now and you are not hungry any more" 
+     * (acabas de comer y ya no tienes hambre).
+     */
+    public void eat(){
+        System.out.println("you have eaten now and you not hungry any more -- Acabas de comer y ya no tienes hambre");
     }
 }
