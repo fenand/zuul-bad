@@ -156,7 +156,7 @@ public class Game
         System.out.println("around at the castle.");
         System.out.println("Your command words are:");
         //System.out.println("   go quit help look eat ");
-        parser.getCommands().showAll();
+        parser.showCommands();
     }
 
     /** 

@@ -62,9 +62,12 @@ public class Parser
             return new Command(null, word2); 
         }
     }
-    
-    public CommandWords getCommands(){
-    
-        return commands;
+
+    /**
+     * Imprime una lista de las palabras de comando validas
+     */
+    public void showCommands()
+    {
+        commands.showAll();
     }
 }
