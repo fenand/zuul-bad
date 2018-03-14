@@ -155,8 +155,9 @@ public class Game
         System.out.println("You are lost. You are alone. You wander");
         System.out.println("around at the castle.");
         System.out.println("Your command words are:");
-        //System.out.println("   go quit help look eat ");
-        parser.showCommands();
+        System.out.println(parser.showCommands());
+        //parser.showCommands();
+        
     }
 
     /** 
