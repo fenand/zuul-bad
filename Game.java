@@ -123,19 +123,22 @@ public class Game
     private boolean processCommand(Command command) 
     {
         boolean wantToQuit = false;
-        if(command.isUnknown()) {
+        if(command.isUnknown()){
             System.out.println("I don't know what you mean...");
             return false;
         }
         String commandWord = command.getCommandWord();
-        if (commandWord.equals("help")) {
+        if (commandWord.equals("help")){
             printHelp();
         }
-        else if (commandWord.equals("go")) {
+        else if (commandWord.equals("go")){
             goRoom(command);
         }
-        else if (commandWord.equals("quit")) {
+        else if (commandWord.equals("quit")){
             wantToQuit = quit(command);
+        }
+        else if(commandWord.equals("look")){
+            look();
         }
         return wantToQuit;
     }
@@ -152,7 +155,7 @@ public class Game
         System.out.println("You are lost. You are alone. You wander");
         System.out.println("around at the castle.");
         System.out.println("Your command words are:");
-        System.out.println("   go quit help");
+        System.out.println("   go quit help look");
     }
 
     /** 
@@ -217,5 +220,11 @@ public class Game
      */
     private void printLocationInfo(){ 
         System.out.println(currentRoom.getLongDescription());  //metodo nuevo creado en room     
+    }
+    /**
+     * Metodo que imprime por pantalla la informacion que esta el metodo printLocationInfo()
+     */
+    private void look(){
+        printLocationInfo();
     }
 }
