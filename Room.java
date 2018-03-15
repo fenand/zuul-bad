@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.ArrayList;
 
 /**
  * Class Room - a room in an adventure game.
@@ -17,26 +18,27 @@ import java.util.HashMap;
 public class Room 
 {
     private String description;
-    private String itemDescription;
-    private float itemWeight;
     // creamos un hashmap y eliminamos los atributos anteriores
     private HashMap<String, Room> salidas;
+    //ArrayList para los items de juego
+    private ArrayList<Item> items;
 
     /**
      * Create a room described "description". Initially, it has
      * no exits. "description" is something like "a kitchen" or
      * "an open court yard".
      * @param description The room's description.
-     * @param itemDescription The room's description.
-     * @param itemWeight The room's description.
+     * 
      */
-    public Room(String description, String itemDescription, float itemWeight) 
+    public Room(String description) 
     {
         this.description = description;
-        this.itemDescription = itemDescription;
-        this.itemWeight = itemWeight;
+
         //inicializamos el hashmap
         salidas = new HashMap<>();
+        
+        //inicializamos el arraylist de items
+        items = new ArrayList<>();
 
     }
 
@@ -119,18 +121,30 @@ public class Room
     }
 
     /**
-     * Return a long description of this room, of the form:
-     *     You are in the 'name of room'
-     *     Exits: north west southwest
+     * Modificado el metodo para que devuelva todo los items mas la descripcion de las habitacones y sus objetos
      * @return A description of the room, including exits.
      */
     //Creado el metodo getLongDescription en la clase Room para aplicar reponsability-driven design
-    public String getLongDescription(){
-        
+    public String getLongDescription(){ 
         //return "You are " + getDescription() + getExitString();
-        
-        String longDescription = "You are  " + getDescription() + "\n"  + getExitString();
-        longDescription += "\n" + "Item: " + itemDescription + "\n" + "Numero De Items: "+ itemWeight;
-        return longDescription;
+        String longDescription = "You are  " + getDescription() + "\n"  + getExitString() ;
+        //return longDescription;
+        for(int cantidadDeItems = 0; cantidadDeItems < items.size(); cantidadDeItems++)
+       {
+            longDescription += "\n" + items.get(cantidadDeItems).getDescription();
+        }
+       return longDescription;
+    }
+    
+    /**
+     * Metodo para añadir items al juego
+     * 
+     * @param descripcion del item
+     * @param cantidad de items o peso
+     */
+    
+    public void addItem(String itemDescription, float itemWeight)
+    {
+        items.add(new Item(itemDescription,itemWeight));
     }
 }

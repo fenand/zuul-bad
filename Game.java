@@ -19,6 +19,7 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
+    
     /**
      * Create the game and initialise its internal map.
      */
@@ -36,16 +37,34 @@ public class Game
         Room exterior,foso1, foso2, muralla, patio, salones, aposentos, torreon1, torreon2, mazmorras;
 
         // // ccreamos las rooms  y objetos mas peso de los objetos
-        exterior = new Room("parte exterior del castillo",null,0);
-        foso1 = new Room("foso","Serpientes",20);
-        foso2 = new Room("foso","Cocodrilos",20);
-        muralla = new Room("muralla del castillo","Soldados",10);
-        patio = new Room("patio del castillo",null,0);
-        salones = new Room("salones del castillo","Cofre de Oro",5);
-        aposentos = new Room("aposentos del rey","Llave de la mazmorra",1);
-        torreon1 = new Room("primera torre",null,0);
-        torreon2 = new Room("segundo torreon",null,0);
-        mazmorras = new Room("la mazmorrra",null,0);
+        // ahora los items son añadidos desde el array de items creado en la clase Item llamando al metodo additem de la clase room
+        
+        exterior = new Room("parte exterior del castillo");
+        exterior.addItem(null,0);
+        
+        foso1 = new Room("foso");
+        foso1.addItem("Serpientes", 20);
+        
+        foso2 = new Room("foso");
+        foso2.addItem("Cocodrilos", 20);
+        foso2.addItem("Serpientes", 20);
+        
+        muralla = new Room("muralla del castillo");
+        muralla.addItem("Soldado", 10);
+        
+        patio = new Room("patio del castillo");
+        
+        salones = new Room("salones del castillo");
+        salones.addItem("cofre de oro", 5);
+        
+        aposentos = new Room("aposentos del rey");
+        aposentos.addItem("Llave de la mazmorra", 1);
+        
+        torreon1 = new Room("primera torre");
+        
+        torreon2 = new Room("segundo torreon");
+        
+        mazmorras = new Room("la mazmorrra");
 
         // // initialise room exits
         //Room north, Room east,  Room south,  Room west     Room southeast  Room northwest
