@@ -31,19 +31,22 @@ public class Game
      * Create all the rooms and link their exits together.
      */
     private void createRooms(){
-        // //Room outside, theater, pub, lab, office;
+
+        //objetos room
         Room exterior,foso1, foso2, muralla, patio, salones, aposentos, torreon1, torreon2, mazmorras;
-        // // create the rooms
-        exterior = new Room("parte exterior del castillo    ");
-        foso1 = new Room("foso ");
-        foso2 = new Room("foso  ");
-        muralla = new Room("muralla del castillo    ");
-        patio = new Room("patio del castillo    ");
-        salones = new Room("salones del castillo    ");
-        aposentos = new Room("aposentos del rey    ");
-        torreon1 = new Room("primera torre    ");
-        torreon2 = new Room("segundo torreon    ");
-        mazmorras = new Room("la mazmorrra    ");
+
+        // // ccreamos las rooms  y objetos mas peso de los objetos
+        exterior = new Room("parte exterior del castillo",null,0);
+        foso1 = new Room("foso","Serpientes",20);
+        foso2 = new Room("foso","Cocodrilos",20);
+        muralla = new Room("muralla del castillo","Soldados",10);
+        patio = new Room("patio del castillo",null,0);
+        salones = new Room("salones del castillo","Cofre de Oro",5);
+        aposentos = new Room("aposentos del rey","Llave de la mazmorra",1);
+        torreon1 = new Room("primera torre",null,0);
+        torreon2 = new Room("segundo torreon",null,0);
+        mazmorras = new Room("la mazmorrra",null,0);
+
         // // initialise room exits
         //Room north, Room east,  Room south,  Room west     Room southeast  Room northwest
         //exterior,foso1, foso2, muralla, patio, salones, aposentos, torreon1, torreon2, mazmorras        
@@ -69,17 +72,7 @@ public class Game
         torreon1.setExit("east",torreon2 );
         torreon1.setExit("northwest",patio );
         mazmorras.setExit("north",patio );
-        //exterior.setExits(null, null, muralla, null,foso2,null); //salida sureste foso2
-        // foso1.setExits(null, muralla, null, null,null,null);
-        // foso2.setExits(null, null, null, muralla,null,exterior);
-        // muralla.setExits(exterior, foso2, patio, foso1,null,null);
-        // patio.setExits(muralla, aposentos, mazmorras, salones,torreon2,null); // salida sureste torreon2
-        // salones.setExits(null, patio, torreon1, null,null,null);
-        // aposentos.setExits(null, null, torreon2, patio,null,null);
-        // torreon1.setExits(salones, torreon2, null, null,null,null);
-        // torreon2.setExits(aposentos, null, null, torreon1,null,patio);
-        // mazmorras.setExits(patio, null, null, null,null,null);
-        // //currentRoom = outside;  // start game outside
+
         currentRoom = exterior; // comienzo del juego
 
     }
@@ -106,8 +99,6 @@ public class Game
         System.out.println();
         System.out.println("Welcome to the World of Zuul!");
         System.out.println("World of Zuul is a new, incredibly boring adventure game.");
-        //System.out.println("Type 'help' if you need help.");
-        
         System.out.println();
         printLocationInfo();
     }
@@ -156,8 +147,6 @@ public class Game
         System.out.println("around at the castle.");
         System.out.println("Your command words are:");
         System.out.println(parser.showCommands());
-        //parser.showCommands();
-        
     }
 
     /** 
@@ -171,24 +160,9 @@ public class Game
             return;
         }
         String direccion = command.getSecondWord();
+
         // Try to leave current room.
-        // // Room nextRoom = null;
-        //modificacion y simplificado de esta parte del codigo
-        // // if(direction.equals("north")) {
-        // // nextRoom = currentRoom.northExit;
-        // // }
-        // // if(direction.equals("east")) {
-        // // nextRoom = currentRoom.eastExit;
-        // // }
-        // // if(direction.equals("south")) {
-        // // nextRoom = currentRoom.southExit;
-        // // }
-        // // if(direction.equals("west")) {
-        // // nextRoom = currentRoom.westExit;
-        // // }
-        // // if(direction.equals("southeast")) {
-        // // nextRoom = currentRoom.southeastExit;
-        // // }
+
         Room nextRoom = currentRoom.getExit(direccion);
         if (nextRoom == null){
             System.out.println("There is no door!");
@@ -235,6 +209,6 @@ public class Game
      * (acabas de comer y ya no tienes hambre).
      */
     private void eat(){
-        System.out.println("you have eaten now and you not hungry any more -- Acabas de comer y ya no tienes hambre");
+        System.out.println("You have eaten now and you not hungry any more -- Acabas de comer y ya no tienes hambre");
     }
 }

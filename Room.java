@@ -17,26 +17,27 @@ import java.util.HashMap;
 public class Room 
 {
     private String description;
+    private String itemDescription;
+    private float itemWeight;
     // creamos un hashmap y eliminamos los atributos anteriores
     private HashMap<String, Room> salidas;
-    // private Room northExit;
-    // private Room southExit;
-    // private Room eastExit;
-    // private Room westExit;
-    // private Room southeastExit;
-    // private Room northwestExit;
 
     /**
      * Create a room described "description". Initially, it has
      * no exits. "description" is something like "a kitchen" or
      * "an open court yard".
      * @param description The room's description.
+     * @param itemDescription The room's description.
+     * @param itemWeight The room's description.
      */
-    public Room(String description) 
+    public Room(String description, String itemDescription, float itemWeight) 
     {
         this.description = description;
+        this.itemDescription = itemDescription;
+        this.itemWeight = itemWeight;
         //inicializamos el hashmap
         salidas = new HashMap<>();
+
     }
 
     /**
@@ -47,30 +48,7 @@ public class Room
     public void setExit(String direccion, Room habitacion){
         salidas.put(direccion, habitacion);
     }
-    // /**
-    // * Define the exits of this room.  Every direction either leads
-    // * to another room or is null (no exit there).
-    // * @param north The north exit.
-    // * @param east The east east.
-    // * @param south The south exit.
-    // * @param west The west exit.
-    // * @param southeast The southeast exit.
-    // */
-    // public void setExits(Room north, Room east, Room south, Room west, Room southeast ,Room northwest) 
-    // {
-    // if(north != null)
-    // salidas.put("north",north);
-    // if(east != null)
-    // salidas.put("east",east);
-    // if(south != null)
-    // salidas.put("south",south);
-    // if(west != null)
-    // salidas.put("west",west);
-    // if( southeast != null)
-    // salidas.put("southeast",southeast);
-    // if( northwest != null)
-    // salidas.put("northwest",northwest);
-    // }
+
     /**
      * @return The description of the room.
      */
@@ -117,7 +95,7 @@ public class Room
      */
     public String getExitString(){
         String salidaDescripcion = "Salidas: ";
-        
+
         if(salidas.get("north") != null){
             salidaDescripcion += "north ";
         }
@@ -135,7 +113,6 @@ public class Room
         }
         if(salidas.get("northwest") != null){
             salidaDescripcion += "northwest ";
-            
         }
 
         return salidaDescripcion;
@@ -149,6 +126,11 @@ public class Room
      */
     //Creado el metodo getLongDescription en la clase Room para aplicar reponsability-driven design
     public String getLongDescription(){
-        return "You are " + getDescription() + getExitString();
+        
+        //return "You are " + getDescription() + getExitString();
+        
+        String longDescription = "You are  " + getDescription() + "\n"  + getExitString();
+        longDescription += "\n" + "Item: " + itemDescription + "\n" + "Numero De Items: "+ itemWeight;
+        return longDescription;
     }
 }
