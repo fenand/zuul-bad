@@ -174,10 +174,10 @@ public class Game
         }
 
         else if(commandWord.equals("back")){
-            //Muestra el objeto del tope de la pila sin extraerlo, en nuestro caso la ultima room visitada
+            //Muestra el objeto del tope de la pila y lo borra
             
             if(!rooms.empty()){
-                currentRoom = rooms.peek();
+                currentRoom = rooms.pop();
                 look();
             }
             else{
