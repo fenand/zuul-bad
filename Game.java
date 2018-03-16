@@ -1,3 +1,4 @@
+import java.util.Stack;
 /**
  *  This class is the main class of the "World of Zuul" application. 
  *  "World of Zuul" is a very simple, text based adventure game.  Users 
@@ -19,13 +20,18 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
-    
+    // creamos una coleccionen en forma de pila para has rooms
+    private Stack<Room>rooms;
+
     /**
      * Create the game and initialise its internal map.
      */
     public Game(){
         createRooms();
         parser = new Parser();
+
+        //inicializamos la pila
+        rooms = new Stack<>();
     }
 
     /**
@@ -38,61 +44,71 @@ public class Game
 
         // // ccreamos las rooms  y objetos mas peso de los objetos
         // ahora los items son añadidos desde el array de items creado en la clase Item llamando al metodo additem de la clase room
-        
+
         exterior = new Room("parte exterior del castillo");
         exterior.addItem(null,0);
-        
+
         foso1 = new Room("foso");
         foso1.addItem("Serpientes", 20);
-        
+
         foso2 = new Room("foso");
         foso2.addItem("Cocodrilos", 20);
         foso2.addItem("Serpientes", 20);
-        
+
         muralla = new Room("muralla del castillo");
-        muralla.addItem("Soldado", 10);
-        
+        muralla.addItem("Soldados", 10);
+
         patio = new Room("patio del castillo");
-        
+
         salones = new Room("salones del castillo");
-        salones.addItem("cofre de oro", 5);
-        
+        salones.addItem("Cofre de oro", 5);
+
         aposentos = new Room("aposentos del rey");
         aposentos.addItem("Llave de la mazmorra", 1);
-        
+
         torreon1 = new Room("primera torre");
-        
+
         torreon2 = new Room("segundo torreon");
-        
+
         mazmorras = new Room("la mazmorrra");
 
-        // // initialise room exits
         //Room north, Room east,  Room south,  Room west     Room southeast  Room northwest
-        //exterior,foso1, foso2, muralla, patio, salones, aposentos, torreon1, torreon2, mazmorras        
+        //exterior,foso1, foso2, muralla, patio, salones, aposentos, torreon1, torreon2, mazmorras  
+
+        // salidas y entradas de las habitaciones 
         exterior.setExit("south", muralla);
-        exterior.setExit("southeast", foso2);        
-        foso1.setExit("east",muralla );        
+        exterior.setExit("southeast", foso2);
+
+        foso1.setExit("east",muralla );
+
         foso2.setExit("west",muralla );
-        foso2.setExit("northwest", exterior);        
+        foso2.setExit("northwest", exterior);
+
         muralla.setExit("north", exterior);
         muralla.setExit("east", foso2 );
         muralla.setExit("south", patio);
-        muralla.setExit("west", foso1);        
+        muralla.setExit("west", foso1); 
+
         patio.setExit("north",muralla );
         patio.setExit("east",aposentos );
         patio.setExit("south",mazmorras );
         patio.setExit("west",salones );
-        patio.setExit("southeast",torreon2 );        
+        patio.setExit("southeast",torreon2 ); 
+
         salones.setExit("south",torreon2 );
-        salones.setExit("east",patio );       
+        salones.setExit("east",patio ); 
+
         aposentos.setExit("west",patio );
-        aposentos.setExit("south",torreon2 );        
+        aposentos.setExit("south",torreon2 );
+
         torreon1.setExit("north",aposentos );
         torreon1.setExit("east",torreon2 );
         torreon1.setExit("northwest",patio );
+
         mazmorras.setExit("north",patio );
 
-        currentRoom = exterior; // comienzo del juego
+        // comienzo del juego
+        currentRoom = exterior; 
 
     }
 
@@ -106,6 +122,7 @@ public class Game
         boolean finished = false;
         while (! finished) {
             Command command = parser.getCommand();
+
             finished = processCommand(command);
         }
         System.out.println("Thank you for playing.  Good bye.");
@@ -129,15 +146,20 @@ public class Game
      */
     private boolean processCommand(Command command) {
         boolean wantToQuit = false;
+
         if(command.isUnknown()){
             System.out.println("I don't know what you mean...");
             return false;
         }
+
         String commandWord = command.getCommandWord();
+
         if (commandWord.equals("help")){
             printHelp();
         }
         else if (commandWord.equals("go")){
+            //añadimos a la pila la room que acabamos de entrar con go
+            rooms.push(currentRoom);
             goRoom(command);
         }
         else if (commandWord.equals("quit")){
@@ -147,10 +169,22 @@ public class Game
             look();
         }
 
-        else if(commandWord.equals("eat"))
-        {
+        else if(commandWord.equals("eat")){
             eat();
         }
+
+        else if(commandWord.equals("back")){
+            //Muestra el objeto del tope de la pila sin extraerlo, en nuestro caso la ultima room visitada
+            
+            if(!rooms.empty()){
+                currentRoom = rooms.peek();
+                look();
+            }
+            else{
+                System.out.println("Avanza una habitacion para poder volver");
+            }
+        }
+
         return wantToQuit;
     }
 
@@ -230,4 +264,14 @@ public class Game
     private void eat(){
         System.out.println("You have eaten now and you not hungry any more -- Acabas de comer y ya no tienes hambre");
     }
+
+    // /**
+    // * comando back
+    // * 
+    // */
+    // private void back(){
+
+    // roomActual = currentRoom.getExit(direccion);
+
+    // }
 }
