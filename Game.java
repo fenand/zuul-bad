@@ -158,8 +158,6 @@ public class Game
             printHelp();
         }
         else if (commandWord.equals("go")){
-            //añadimos a la pila la room que acabamos de entrar con go
-            rooms.push(currentRoom);
             goRoom(command);
         }
         else if (commandWord.equals("quit")){
@@ -174,15 +172,7 @@ public class Game
         }
 
         else if(commandWord.equals("back")){
-            //Muestra el objeto del tope de la pila y lo borra
-            
-            if(!rooms.empty()){
-                currentRoom = rooms.pop();
-                look();
-            }
-            else{
-                System.out.println("Avanza una habitacion para poder volver");
-            }
+            back();
         }
 
         return wantToQuit;
@@ -221,7 +211,11 @@ public class Game
             System.out.println("There is no door!");
         }
         else{
+            //añadimos a la pila la room que acabamos de entrar con go
+            rooms.push(currentRoom);
+
             currentRoom = nextRoom;
+
             printLocationInfo();
         }
     }
@@ -265,13 +259,22 @@ public class Game
         System.out.println("You have eaten now and you not hungry any more -- Acabas de comer y ya no tienes hambre");
     }
 
-    // /**
-    // * comando back
-    // * 
-    // */
-    // private void back(){
+    /**
+     * comando back
+     * 
+     */
+    private void back(){
 
-    // roomActual = currentRoom.getExit(direccion);
+        //Muestra el objeto del tope de la pila y lo borra
 
-    // }
+        if(!rooms.empty()){
+            currentRoom = rooms.pop();
+            look();
+        }
+
+        else{
+            System.out.println("Avanza una habitacion para poder hacer un back");
+        }
+
+    }
 }
