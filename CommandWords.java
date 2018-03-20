@@ -13,7 +13,14 @@ public class CommandWords
 {
     // a constant array that holds all valid command words
     private static final String[] validCommands = {
-            "go", "quit", "help", "look", "eat", "back"
+            "go", "quit", "help", "look", "eat", "back",
+
+            // El jugador pueda coger objetos de la sala en la que se encuentre.
+            // El jugador pueda transportar cualquier número de objetos, pero solo hasta un cierto peso máximo.
+            // Algunos objetos no puedan cogerse.
+            // El jugador pueda soltar objetos en la sala actual.
+
+            "take", "drop" , "items"
         };
 
     /**
@@ -44,9 +51,8 @@ public class CommandWords
         String commands = "";
         for (String command : validCommands) {
             //System.out.println(command + " ");
-            commands += command + " ";
+            commands += "\n" + command + " ";
         }
-        System.out.println();
         return commands;
     }
 }

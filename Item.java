@@ -9,18 +9,21 @@ public class Item
 {
     private String itemDescription;
     private float itemWeight;
+    private boolean objetosQueSePuedenCoger;
 
     /**
      * Constructor de la clase item, crea objetos de tipo item
      * @param itemDescription descripcion del item.
      * @param itemWeight peso o cantidad del item.
      */
-    public Item(String itemDescription, float itemWeight){
+    public Item(String itemDescription, float itemWeight, boolean objetosQueSePuedenCoger){
         this.itemDescription = itemDescription;
         this.itemWeight = itemWeight;
+        this.objetosQueSePuedenCoger = objetosQueSePuedenCoger;
     }
 
     /**
+     * item
      * @return itemDescription.
      */
     public String getItemDescription(){
@@ -28,6 +31,7 @@ public class Item
     }
 
     /**
+     * cantidad
      * @return itemWeight.
      */
     public float getItemWeight(){
@@ -35,16 +39,20 @@ public class Item
     }
 
     /**
-     * metodo para devolver un String con la descripcion de los items
-     * @return descripcion de los items.
+     * metodo para devolver si el objeto se pude coger o no
+     * @return true si se puede , false no
      */
-    //Creado el metodo getLongDescription en la clase Room para aplicar reponsability-driven design
+    public boolean getSePuedeCoger(){
+        return objetosQueSePuedenCoger;
+    }
+
+    /**
+     * metodo para devolver un String con la descripcion de los items
+     * @return items y peso.
+     */
+
     public String getDescription(){
-
-        //return "You are " + getDescription() + getExitString();
-
-        String description = "\n" + "Item: " + itemDescription + "\n" + "Numero De Items: "+ itemWeight;
-
+        String description = "\n" + "Item: " + itemDescription + "\n" + "Items en la sala: "+ itemWeight;
         return description;
     }
 }

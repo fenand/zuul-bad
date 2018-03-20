@@ -1,4 +1,5 @@
 import java.util.Stack;
+import java.util.ArrayList;
 /**
  *  This class is the main class of the "World of Zuul" application. 
  *  "World of Zuul" is a very simple, text based adventure game.  Users 
@@ -22,6 +23,12 @@ public class Game
     private Room currentRoom;
     // creamos una coleccionen en forma de pila para has rooms
     private Stack<Room>rooms;
+    //creamos un arraylist de los objetos que vamos a ir añadiendo a la mochilo
+    private ArrayList<Item> mochilo;
+    //Peso Maximo que puede llevar el jugador en una constante por eso va en mayusculas.
+    public static final float PESO_MAXIMO = 50;
+    //peso que tiene en la mochilo actualmente
+    private float pesoMochilo;
 
     /**
      * Create the game and initialise its internal map.
@@ -32,6 +39,10 @@ public class Game
 
         //inicializamos la pila
         rooms = new Stack<>();
+
+        // inicializamos el arraylist y el peso que tienes en la mochila
+        mochilo = new ArrayList<>();
+        pesoMochilo = 0;
     }
 
     /**
@@ -46,27 +57,28 @@ public class Game
         // ahora los items son añadidos desde el array de items creado en la clase Item llamando al metodo additem de la clase room
 
         exterior = new Room("parte exterior del castillo");
-        exterior.addItem(null,0);
 
         foso1 = new Room("foso");
-        foso1.addItem("Serpientes", 20);
+        foso1.addItem("serpientes",20,false);
 
         foso2 = new Room("foso");
-        foso2.addItem("Cocodrilos", 20);
-        foso2.addItem("Serpientes", 20);
+        foso2.addItem("cocodrilos", 20,false);
+        foso2.addItem("serpientes", 20,false);
 
         muralla = new Room("muralla del castillo");
-        muralla.addItem("Soldados", 10);
+        muralla.addItem("soldados", 10,false);
 
         patio = new Room("patio del castillo");
 
         salones = new Room("salones del castillo");
-        salones.addItem("Cofre de oro", 5);
+        salones.addItem("cofre_de_oro", 25,true);
 
         aposentos = new Room("aposentos del rey");
-        aposentos.addItem("Llave de la mazmorra", 1);
+        aposentos.addItem("llave_de_la_mazmorra", 1,true);
+        aposentos.addItem("cofre_de_oro", 25,true);
 
         torreon1 = new Room("primera torre");
+        torreon1.addItem("cofre_de_oro", 15,true);
 
         torreon2 = new Room("segundo torreon");
 
@@ -101,9 +113,12 @@ public class Game
         aposentos.setExit("west",patio );
         aposentos.setExit("south",torreon2 );
 
-        torreon1.setExit("north",aposentos );
+        torreon1.setExit("north",salones );
         torreon1.setExit("east",torreon2 );
-        torreon1.setExit("northwest",patio );
+
+        torreon2.setExit("northwest",patio );
+        torreon2.setExit("north",aposentos );
+        torreon2.setExit("west",torreon1 );
 
         mazmorras.setExit("north",patio );
 
@@ -133,9 +148,8 @@ public class Game
      */
     private void printWelcome(){
         System.out.println();
-        System.out.println("Welcome to the World of Zuul!");
+        System.out.println("Welcome to the World of Zuulo!");
         System.out.println("World of Zuul is a new, incredibly boring adventure game.");
-        System.out.println();
         printLocationInfo();
     }
 
@@ -174,7 +188,23 @@ public class Game
         else if(commandWord.equals("back")){
             back();
         }
-
+        else if(commandWord.equals("take")){
+            take(command);
+            System.out.println();
+            look();
+        }
+        else if(commandWord.equals("items")){
+            objetosMochilo(command);
+            System.out.println();
+            look();
+        }
+        else if(commandWord.equals("drop")){
+            drop(command);
+            System.out.println();
+            objetosMochilo(command);
+            System.out.println();
+            look();
+        }
         return wantToQuit;
     }
 
@@ -208,14 +238,12 @@ public class Game
 
         Room nextRoom = currentRoom.getExit(direccion);
         if (nextRoom == null){
-            System.out.println("There is no door!");
+            System.out.println("There is no door (Hodoor)!");
         }
         else{
-            //añadimos a la pila la room que acabamos de entrar con go
+            //añadimos a la pila la room actual
             rooms.push(currentRoom);
-
             currentRoom = nextRoom;
-
             printLocationInfo();
         }
     }
@@ -256,25 +284,105 @@ public class Game
      * (acabas de comer y ya no tienes hambre).
      */
     private void eat(){
-        System.out.println("You have eaten now and you not hungry any more -- Acabas de comer y ya no tienes hambre");
+        System.out.println("You have eaten now and you not hungry any more -- Acabas de comer y ya no tienes hambre gordo!!");
     }
 
     /**
-     * comando back
-     * 
+     * comando back para volver atras en una sala
      */
     private void back(){
-
         //Muestra el objeto del tope de la pila y lo borra
-
         if(!rooms.empty()){
             currentRoom = rooms.pop();
             look();
         }
-
         else{
             System.out.println("Avanza una habitacion para poder hacer un back");
+        }
+    }
+
+    /**
+     * comando take para recoger un itme de la sala y guardarlo en la mochilo
+     */
+    private void take(Command command){
+        if(!command.hasSecondWord()){
+            System.out.println("Escribe el objeto que quieres guardar!!");
+            return;
+        }
+
+        String objetoACoger = command.getSecondWord();
+
+        if (currentRoom.getCantidadDeItems() > 0) {
+            //condicion para coger un objeto si existe o no ,con el segundo comando escrito despues de take y la condicion de poder cogerlos o no
+            if(currentRoom.getItem(objetoACoger).getSePuedeCoger()){
+                //condicion para la capacida de la mochilo
+                if(pesoMochilo + currentRoom.getItem(objetoACoger).getItemWeight() <= PESO_MAXIMO){
+                    mochilo.add(currentRoom.getItem(objetoACoger));
+                    pesoMochilo += currentRoom.getItem(objetoACoger).getItemWeight();
+                    currentRoom.borrarItem(objetoACoger);
+                    System.out.println("Has cogido este item: " + objetoACoger);
+                }
+                else{
+                    System.out.println("Mochilas mochales,tu mochila esta llega no puedes cargar mas peso" + "\n" + "Limite de peso: " + PESO_MAXIMO +"\n" + "Peso actual :" + pesoMochilo);
+                }
+            }
+            else{
+                System.out.println("Mochilas mochales,tu mochilo no acepta ese objeto");
+            }
+        }
+        else{
+            System.out.println("La sala esta desierta, cambia de sala para encontrar algo!!");
+        }
+    }
+
+    /**
+     * metodo para imprimir los items que tengo en la mochila
+     */
+    private void objetosMochilo(Command command){
+        int contadorTareas = 0;
+
+        if(!mochilo.isEmpty()){
+            for(Item objetosEnLaMochilo : mochilo){
+                System.out.println((contadorTareas + 1) + "- " + objetosEnLaMochilo.getItemDescription() + "\n" + "Cantidad de Items: " + objetosEnLaMochilo.getItemWeight() + "\n" 
+                    + "Capacidad mochilo: " + (PESO_MAXIMO - pesoMochilo));
+                contadorTareas++;
+            }
+        }
+        else{
+            System.out.println("Mochilas mochales, No tienes objetos en tu MOCHILO" + "\n" 
+                + "Capacidad mochilo: " + (PESO_MAXIMO - pesoMochilo));
+        }
+    }
+
+    /**
+     * metodo para dejar objetos en las habitaciones
+     */
+    private void drop(Command command){
+        if(!command.hasSecondWord()){
+            System.out.println("Escribe el objeto que quieres dejar!!");
+            return;
+        }
+
+        String objetoADejar = command.getSecondWord();
+        
+        int objeto = 0;
+        boolean objetoSoltado = false;
+        for(int i = 0 ; i < mochilo.size() ; i++ ){
+            if(mochilo.get(i).getItemDescription().equalsIgnoreCase(objetoADejar)){
+                objeto = i;
+                objetoSoltado = true;
+            }
+
+            if(objetoSoltado){
+                pesoMochilo -= mochilo.get(objeto).getItemWeight();
+                currentRoom.addItem(mochilo.get(objeto).getItemDescription(), mochilo.get(objeto).getItemWeight(), true);
+                mochilo.remove(objeto);
+            }
+            else{
+                System.out.println("No puedes dejar un objeto que no tienes en tu mochilo");
+            }
         }
 
     }
 }
+
