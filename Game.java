@@ -26,7 +26,7 @@ public class Game
     //creamos un arraylist de los objetos que vamos a ir añadiendo a la mochilo
     private ArrayList<Item> mochilo;
     //Peso Maximo que puede llevar el jugador en una constante por eso va en mayusculas.
-    public static final float PESO_MAXIMO = 50;
+    private static final float PESO_MAXIMO = 50;
     //peso que tiene en la mochilo actualmente
     private float pesoMochilo;
 
@@ -79,6 +79,7 @@ public class Game
 
         torreon1 = new Room("primera torre");
         torreon1.addItem("cofre_de_oro", 15,true);
+        torreon1.addItem("cofre_de_plata", 15,true);
 
         torreon2 = new Room("segundo torreon");
 
@@ -311,27 +312,31 @@ public class Game
         }
 
         String objetoACoger = command.getSecondWord();
-
-        if (currentRoom.getCantidadDeItems() > 0) {
-            //condicion para coger un objeto si existe o no ,con el segundo comando escrito despues de take y la condicion de poder cogerlos o no
-            if(currentRoom.getItem(objetoACoger).getSePuedeCoger()){
-                //condicion para la capacida de la mochilo
-                if(pesoMochilo + currentRoom.getItem(objetoACoger).getItemWeight() <= PESO_MAXIMO){
-                    mochilo.add(currentRoom.getItem(objetoACoger));
-                    pesoMochilo += currentRoom.getItem(objetoACoger).getItemWeight();
-                    currentRoom.borrarItem(objetoACoger);
-                    System.out.println("Has cogido este item: " + objetoACoger);
+        if(currentRoom.getItem(objetoACoger) != null){
+            if (currentRoom.getCantidadDeItems() > 0) {
+                //condicion para coger un objeto si existe o no ,con el segundo comando escrito despues de take y la condicion de poder cogerlos o no
+                if(currentRoom.getItem(objetoACoger).getSePuedeCoger()){
+                    //condicion para la capacida de la mochilo
+                    if(pesoMochilo + currentRoom.getItem(objetoACoger).getItemWeight() <= PESO_MAXIMO){
+                        mochilo.add(currentRoom.getItem(objetoACoger));
+                        pesoMochilo += currentRoom.getItem(objetoACoger).getItemWeight();
+                        currentRoom.borrarItem(objetoACoger);
+                        System.out.println("Has cogido este item: " + objetoACoger);
+                    }
+                    else{
+                        System.out.println("Mochilas mochales,tu mochila esta llega no puedes cargar mas peso" + "\n" + "Limite de peso: " + PESO_MAXIMO +"\n" + "Peso actual :" + pesoMochilo);
+                    }
                 }
                 else{
-                    System.out.println("Mochilas mochales,tu mochila esta llega no puedes cargar mas peso" + "\n" + "Limite de peso: " + PESO_MAXIMO +"\n" + "Peso actual :" + pesoMochilo);
+                    System.out.println("Mochilas mochales,tu mochilo no acepta ese objeto");
                 }
             }
             else{
-                System.out.println("Mochilas mochales,tu mochilo no acepta ese objeto");
+                System.out.println("La sala esta desierta, cambia de sala para encontrar algo!!");
             }
         }
         else{
-            System.out.println("La sala esta desierta, cambia de sala para encontrar algo!!");
+            System.out.println("El objeto no existe!!");
         }
     }
 
@@ -364,16 +369,16 @@ public class Game
         }
 
         String objetoADejar = command.getSecondWord();
-        
+
         int objeto = 0;
         boolean objetoSoltado = false;
         for(int i = 0 ; i < mochilo.size() ; i++ ){
             if(mochilo.get(i).getItemDescription().equalsIgnoreCase(objetoADejar)){
                 objeto = i;
-                objetoSoltado = true;
-            }
+                //objetoSoltado = true;
+                //}
 
-            if(objetoSoltado){
+                // if(objetoSoltado){
                 pesoMochilo -= mochilo.get(objeto).getItemWeight();
                 currentRoom.addItem(mochilo.get(objeto).getItemDescription(), mochilo.get(objeto).getItemWeight(), true);
                 mochilo.remove(objeto);
