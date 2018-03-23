@@ -19,25 +19,21 @@ import java.util.Stack;
 public class Game 
 {
     private Parser parser;
-    private Room currentRoom;
-    // creamos una coleccionen en forma de pila para has rooms
-    private Stack<Room>rooms;
+    private Player player;
 
     /**
      * Create the game and initialise its internal map.
      */
     public Game(){
-        createRooms();
         parser = new Parser();
 
-        //inicializamos la pila
-        rooms = new Stack<>();
+        player = new Player(createRooms());
     }
 
     /**
      * Create all the rooms and link their exits together.
      */
-    private void createRooms(){
+    private Room createRooms(){
 
         //objetos room
         Room exterior,foso1, foso2, muralla, patio, salones, aposentos, torreon1, torreon2, mazmorras;
@@ -46,25 +42,24 @@ public class Game
         // ahora los items son añadidos desde el array de items creado en la clase Item llamando al metodo additem de la clase room
 
         exterior = new Room("parte exterior del castillo");
-        exterior.addItem(null,0);
 
         foso1 = new Room("foso");
-        foso1.addItem("Serpientes", 20);
+        foso1.addItem("Serpientes","Serpientes con mordeduras muy venenosas", 20);
 
         foso2 = new Room("foso");
-        foso2.addItem("Cocodrilos", 20);
-        foso2.addItem("Serpientes", 20);
+        foso2.addItem("Cocodrilos","Cocodrilos hambrientos y muy feroces", 20);
+        foso2.addItem("Serpientes","Serpientes con mordeduras muy venenosas", 20);
 
         muralla = new Room("muralla del castillo");
-        muralla.addItem("Soldados", 10);
+        muralla.addItem("Soldados","Solados muy feroces", 10);
 
         patio = new Room("patio del castillo");
 
         salones = new Room("salones del castillo");
-        salones.addItem("Cofre de oro", 5);
+        salones.addItem("Cofre","Cofre de oro uy valioso", 5);
 
         aposentos = new Room("aposentos del rey");
-        aposentos.addItem("Llave de la mazmorra", 1);
+        aposentos.addItem("Llave","Llave de la mazmorra", 1);
 
         torreon1 = new Room("primera torre");
 
@@ -101,21 +96,25 @@ public class Game
         aposentos.setExit("west",patio );
         aposentos.setExit("south",torreon2 );
 
-        torreon1.setExit("north",aposentos );
+        torreon1.setExit("north",salones );
         torreon1.setExit("east",torreon2 );
-        torreon1.setExit("northwest",patio );
+
+        torreon2.setExit("northwest",patio );
+        torreon2.setExit("north",aposentos );
+        torreon2.setExit("west",torreon1 );
 
         mazmorras.setExit("north",patio );
 
         // comienzo del juego
-        currentRoom = exterior; 
+
+          return exterior;
 
     }
 
     /**
      *  Main play routine.  Loops until end of play.
      */
-    public void play() {            
+    public void play(){            
         printWelcome();
         // Enter the main command loop.  Here we repeatedly read commands and
         // execute them until the game is over.
@@ -136,7 +135,7 @@ public class Game
         System.out.println("Welcome to the World of Zuul!");
         System.out.println("World of Zuul is a new, incredibly boring adventure game.");
         System.out.println();
-        printLocationInfo();
+        player.printLocationInfo();
     }
 
     /**
@@ -176,8 +175,8 @@ public class Game
         }
 
         return wantToQuit;
-    }
 
+    }
     // implementations of user commands:
 
     /**
@@ -197,27 +196,7 @@ public class Game
      * the new room, otherwise print an error message.
      */
     private void goRoom(Command command){
-        if(!command.hasSecondWord()){
-            // if there is no second word, we don't know where to go...
-            System.out.println("Go where?");
-            return;
-        }
-        String direccion = command.getSecondWord();
-
-        // Try to leave current room.
-
-        Room nextRoom = currentRoom.getExit(direccion);
-        if (nextRoom == null){
-            System.out.println("There is no door!");
-        }
-        else{
-            //añadimos a la pila la room que acabamos de entrar con go
-            rooms.push(currentRoom);
-
-            currentRoom = nextRoom;
-
-            printLocationInfo();
-        }
+        player.goRoom(command);
     }
 
     /** 
@@ -235,19 +214,11 @@ public class Game
         }
     }
 
-    // mejorando el acoplamiento de esta parte del codigo para no tener que cambiar las dos clases cuando modifiques la clase room
-    /**
-     * nuevo metodo privado para evitar la repeticion de codigo entre printwelcome y goRoom
-     */
-    private void printLocationInfo(){ 
-        System.out.println(currentRoom.getLongDescription());  //metodo nuevo creado en room     
-    }
-
     /**
      * Metodo que imprime por pantalla la informacion que esta el metodo printLocationInfo()
      */
     private void look(){
-        printLocationInfo();
+        player.printLocationInfo();
     }
 
     /**
@@ -261,20 +232,8 @@ public class Game
 
     /**
      * comando back
-     * 
      */
     private void back(){
-
-        //Muestra el objeto del tope de la pila y lo borra
-
-        if(!rooms.empty()){
-            currentRoom = rooms.pop();
-            look();
-        }
-
-        else{
-            System.out.println("Avanza una habitacion para poder hacer un back");
-        }
-
+        player.goBack();
     }
 }

@@ -7,6 +7,7 @@
  */
 public class Item
 {
+    private String iD;
     private String itemDescription;
     private float itemWeight;
 
@@ -15,7 +16,8 @@ public class Item
      * @param itemDescription descripcion del item.
      * @param itemWeight peso o cantidad del item.
      */
-    public Item(String itemDescription, float itemWeight){
+    public Item(String iD,String itemDescription, float itemWeight){
+        this.iD = iD;
         this.itemDescription = itemDescription;
         this.itemWeight = itemWeight;
     }
@@ -35,6 +37,12 @@ public class Item
     }
 
     /**
+     * return iD
+     */
+    public String getID(){
+    return iD;
+    }
+    /**
      * metodo para devolver un String con la descripcion de los items
      * @return descripcion de los items.
      */
@@ -43,7 +51,7 @@ public class Item
 
         //return "You are " + getDescription() + getExitString();
 
-        String description = "\n" + "Item: " + itemDescription + "\n" + "Numero De Items: "+ itemWeight;
+        String description = "\n" +"iD: "+ iD + "\n" +"Descripcion: " + itemDescription + "\n" + "Numero De Items: "+ itemWeight;
 
         return description;
     }
