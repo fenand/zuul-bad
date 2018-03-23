@@ -36,7 +36,7 @@ public class Room
 
         //inicializamos el hashmap
         salidas = new HashMap<>();
-        
+
         //inicializamos el arraylist de items
         items = new ArrayList<>();
 
@@ -130,21 +130,21 @@ public class Room
         String longDescription = "You are  " + getDescription() + "\n"  + getExitString() ;
         //return longDescription;
         for(int cantidadDeItems = 0; cantidadDeItems < items.size(); cantidadDeItems++)
-       {
+        {
             longDescription += "\n" + items.get(cantidadDeItems).getDescription();
         }
-       return longDescription;
+        return longDescription;
     }
-    
+
     /**
      * Metodo para añadir items al juego
      * 
      * @param descripcion del item
      * @param cantidad de items o peso
      */
-    
-    public void addItem(String itemDescription, float itemWeight)
+
+    public void addItem(String iD,String itemDescription, float itemWeight)
     {
-        items.add(new Item(itemDescription,itemWeight));
+        items.add(new Item(iD,itemDescription,itemWeight));
     }
 }
