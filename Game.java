@@ -67,13 +67,18 @@ public class Game
 
         foso1 = new Room("foso");
 <<<<<<< HEAD
+<<<<<<< HEAD
         foso1.addItem("Serpientes","Serpientes con mordeduras muy venenosas", 20);
+=======
+        foso1.addItem("Serpientes","Serpientes con mordeduras muy venenosas", 20,false);
+>>>>>>> ramaObjetos
 
         foso2 = new Room("foso");
-        foso2.addItem("Cocodrilos","Cocodrilos hambrientos y muy feroces", 20);
-        foso2.addItem("Serpientes","Serpientes con mordeduras muy venenosas", 20);
+        foso2.addItem("Cocodrilos","Cocodrilos hambrientos y muy feroces", 20,false);
+        foso2.addItem("Serpientes","Serpientes con mordeduras muy venenosas", 20,false);
 
         muralla = new Room("muralla del castillo");
+<<<<<<< HEAD
         muralla.addItem("Soldados","Solados muy feroces", 10);
 =======
         foso1.addItem("serpientes",20,false);
@@ -85,10 +90,14 @@ public class Game
         muralla = new Room("muralla del castillo");
         muralla.addItem("soldados", 10,false);
 >>>>>>> cogersoltar
+=======
+        muralla.addItem("Soldados","Solados muy feroces", 10,false);
+>>>>>>> ramaObjetos
 
         patio = new Room("patio del castillo");
 
         salones = new Room("salones del castillo");
+<<<<<<< HEAD
 <<<<<<< HEAD
         salones.addItem("Cofre","Cofre de oro uy valioso", 5);
 
@@ -101,6 +110,13 @@ public class Game
         aposentos.addItem("llave_de_la_mazmorra", 1,true);
         aposentos.addItem("cofre_de_oro", 25,true);
 >>>>>>> cogersoltar
+=======
+        salones.addItem("Cofre","Cofre de oro uy valioso", 25,true);
+
+        aposentos = new Room("aposentos del rey");
+        aposentos.addItem("Llave","Llave de la mazmorra", 10,true);
+        aposentos.addItem("Cofre","Cofre de oro uy valioso", 25,true);
+>>>>>>> ramaObjetos
 
         torreon1 = new Room("primera torre");
         torreon1.addItem("cofre_de_oro", 15,true);
@@ -150,7 +166,7 @@ public class Game
 
         // comienzo del juego
 
-          return exterior;
+        return exterior;
 
     }
 
@@ -221,6 +237,7 @@ public class Game
             back();
         }
         else if(commandWord.equals("take")){
+<<<<<<< HEAD
             take(command);           
         }
         else if(commandWord.equals("items")){
@@ -228,6 +245,18 @@ public class Game
         }
         else if(commandWord.equals("drop")){
             drop(command);           
+=======
+            player.take(command);
+
+        }
+        else if(commandWord.equals("items")){
+        player.objetosMochilo(command);
+
+        }
+        else if(commandWord.equals("drop")){
+        player.drop(command);
+
+>>>>>>> ramaObjetos
         }
         return wantToQuit;
 
@@ -304,7 +333,11 @@ public class Game
      * (acabas de comer y ya no tienes hambre).
      */
     private void eat(){
+<<<<<<< HEAD
         System.out.println("You have eaten now and you not hungry any more -- Acabas de comer y ya no tienes hambre gordo!!");
+=======
+        player.eat();
+>>>>>>> ramaObjetos
     }
 
     /**
