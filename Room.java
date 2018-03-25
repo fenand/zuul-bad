@@ -20,8 +20,11 @@ public class Room
     private String description;
     // creamos un hashmap y eliminamos los atributos anteriores
     private HashMap<String, Room> salidas;
-    //ArrayList para los items de juego
-    private ArrayList<Item> items;
+
+    // //ArrayList para los items de juego
+    //cambio el array list de items por un hashmap de items
+    // private ArrayList<Item> items;
+    private HashMap<String, Item> items;
 
     /**
      * Create a room described "description". Initially, it has
@@ -38,7 +41,8 @@ public class Room
         salidas = new HashMap<>();
 
         //inicializamos el arraylist de items
-        items = new ArrayList<>();
+        //cambio el array list de items por un hashmap de items
+        items = new HashMap<>();
 
     }
 
@@ -126,12 +130,20 @@ public class Room
      */
     //Creado el metodo getLongDescription en la clase Room para aplicar reponsability-driven design
     public String getLongDescription(){ 
+<<<<<<< HEAD
         //return "You are " + getDescription() + getExitString();
         String longDescription = "You are  " + getDescription() + "\n"  + getExitString() ;
         //return longDescription;
         for(int cantidadDeItems = 0; cantidadDeItems < items.size(); cantidadDeItems++)
         {
             longDescription += "\n" + items.get(cantidadDeItems).getDescription();
+=======
+        String longDescription = "You are  " + getDescription() + "\n"  + getExitString();
+        if (items.size() > 0){
+            for(Item objetoActual : items.values()){
+                longDescription += "\n" + objetoActual.getDescription();
+            }
+>>>>>>> cogersoltar
         }
         return longDescription;
     }
@@ -139,12 +151,43 @@ public class Room
     /**
      * Metodo para añadir items al juego
      * 
-     * @param descripcion del item
-     * @param cantidad de items o peso
+     * @param itemDescription item
+     * @param itemWeight cantidad de items o peso
      */
 
+<<<<<<< HEAD
     public void addItem(String iD,String itemDescription, float itemWeight)
     {
         items.add(new Item(iD,itemDescription,itemWeight));
+=======
+    public void addItem(String itemDescription, float itemWeight , boolean objetosQueSePuedenCoger)
+    {
+        items.put(itemDescription,new Item(itemDescription,itemWeight,objetosQueSePuedenCoger));
+    }
+
+    /**
+     * metodo para devolver el item que pasas por parametro
+     * @param item que quieres devolver
+     * @return item devuelto
+     */
+    public Item getItem(String item){
+        return items.get(item);
+    }
+
+    /**
+     * metodo para saber la cantidad de items que hay
+     * @return numerode items en la sala
+     */
+    public int getCantidadDeItems(){
+        return items.size();
+    }
+
+    /**
+     * metodo para remover el item de la sala que indiquemos por parametro
+     * @param item a borrar por parametro
+     */
+    public void borrarItem(String item){
+        items.remove(item);
+>>>>>>> cogersoltar
     }
 }
