@@ -25,7 +25,7 @@ public class Player
     // Haz un commit dentro de la rama (commit r01). hecho--------------------
 
     // 2-Implementa la posibilidad de que haya objetos en el juego que no se puedan coger. 
-    // Haz un commit dentro de la rama (commit r02).
+    // Haz un commit dentro de la rama (commit r02).hecho --------------
 
     // 3-Implementa un comando items que haga que se impriman por pantalla todos los objetos que lleva ahora mismo el jugador, 
     // junto con su peso total. Haz un commit dentro de la rama (commit r03).
@@ -124,25 +124,45 @@ public class Player
         String objetoACoger = command.getSecondWord();
 
         if(currentRoom.getItem(objetoACoger) != null){
-            if (currentRoom.getCantidadDeItems() > 0) {
+            if (currentRoom.getCantidadDeItems() > 0){
                 if(currentRoom.getItem(objetoACoger).getSePuedeCoger()){
-                mochilo.add(currentRoom.getItem(objetoACoger));
-                pesoMochilo += currentRoom.getItem(objetoACoger).getItemWeight();
-                currentRoom.borrarItem(objetoACoger);
-                System.out.println("Has cogido este item: " + objetoACoger);
+                    mochilo.add(currentRoom.getItem(objetoACoger));
+                    pesoMochilo += currentRoom.getItem(objetoACoger).getItemWeight();
+                    currentRoom.borrarItem(objetoACoger);
+                    System.out.println("Has cogido este item: " + objetoACoger);
+                }
+                else{
+                    System.out.println("Mochilas mochales,tu mochilo no acepta ese objeto");
+                }
+
             }
             else{
+
                 System.out.println("La sala esta desierta, cambia de sala para encontrar algo!!");
             }
-        }
-        else{
-            System.out.println("Mochilas mochales,tu mochilo no acepta ese objeto");
-        }
         }
 
         else{
             System.out.println("El objeto no existe!!");
         }
 
+    }
+
+    /**
+     * metodo para imprimir los items que tengo en la mochila
+     */
+    public void objetosMochilo(Command command){
+        int contador = 0;
+
+        if(!mochilo.isEmpty()){
+            for(Item objetosEnLaMochilo : mochilo){
+                System.out.println((contador + 1) + "- " + objetosEnLaMochilo.getID() + "\n" + "Cantidad de Items: " + objetosEnLaMochilo.getItemWeight()+ "\n" + 
+                "Peso Mochilo: "+ pesoMochilo);
+                contador++;
+            }
+        }
+        else{
+            System.out.println("Mochilas mochales, No tienes objetos en tu MOCHILO" );
+        }
     }
 }

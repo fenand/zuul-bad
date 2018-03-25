@@ -178,10 +178,10 @@ public class Game
             player.take(command);
 
         }
-        // else if(commandWord.equals("items")){
-        // player.objetosMochilo(command);
+        else if(commandWord.equals("items")){
+        player.objetosMochilo(command);
 
-        // }
+        }
         // else if(commandWord.equals("drop")){
         // player.drop(command);
 
