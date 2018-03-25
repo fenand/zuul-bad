@@ -28,7 +28,7 @@ public class Player
     // Haz un commit dentro de la rama (commit r02).hecho --------------
 
     // 3-Implementa un comando items que haga que se impriman por pantalla todos los objetos que lleva ahora mismo el jugador, 
-    // junto con su peso total. Haz un commit dentro de la rama (commit r03).
+    // junto con su peso total. Haz un commit dentro de la rama (commit r03).hecho --------
 
     // 4-Implementa la posibilidad de que el jugador pueda soltar objetos. 
     // Haz un commit dentro de la rama (commit r04).
@@ -165,4 +165,30 @@ public class Player
             System.out.println("Mochilas mochales, No tienes objetos en tu MOCHILO" );
         }
     }
+    /**
+     * metodo para dejar objetos en las habitaciones
+     */
+    public void drop(Command command){
+        if(!command.hasSecondWord()){
+            System.out.println("Escribe el objeto que quieres dejar!!");
+            return;
+        }
+
+        String objetoADejar = command.getSecondWord();
+
+        int objeto = 0;
+        boolean objetoSoltado = false;
+        for(int i = 0 ; i < mochilo.size() ; i++ ){
+            if(mochilo.get(i).getID().equalsIgnoreCase(objetoADejar)){
+                objeto = i;
+                pesoMochilo -= mochilo.get(objeto).getItemWeight();
+                currentRoom.addItem(mochilo.get(objeto).getID(),mochilo.get(objeto).getItemDescription(), mochilo.get(objeto).getItemWeight(), true);
+                mochilo.remove(objeto);
+            }
+            else{
+                System.out.println("No puedes dejar un objeto que no tienes en tu mochilo");
+            }
+        }
+
+}
 }

@@ -182,10 +182,10 @@ public class Game
         player.objetosMochilo(command);
 
         }
-        // else if(commandWord.equals("drop")){
-        // player.drop(command);
+        else if(commandWord.equals("drop")){
+        player.drop(command);
 
-        // }
+        }
         return wantToQuit;
 
     }
