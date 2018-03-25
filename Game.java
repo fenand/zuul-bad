@@ -44,22 +44,23 @@ public class Game
         exterior = new Room("parte exterior del castillo");
 
         foso1 = new Room("foso");
-        foso1.addItem("Serpientes","Serpientes con mordeduras muy venenosas", 20);
+        foso1.addItem("Serpientes","Serpientes con mordeduras muy venenosas", 20,false);
 
         foso2 = new Room("foso");
-        foso2.addItem("Cocodrilos","Cocodrilos hambrientos y muy feroces", 20);
-        foso2.addItem("Serpientes","Serpientes con mordeduras muy venenosas", 20);
+        foso2.addItem("Cocodrilos","Cocodrilos hambrientos y muy feroces", 20,false);
+        foso2.addItem("Serpientes","Serpientes con mordeduras muy venenosas", 20,false);
 
         muralla = new Room("muralla del castillo");
-        muralla.addItem("Soldados","Solados muy feroces", 10);
+        muralla.addItem("Soldados","Solados muy feroces", 10,false);
 
         patio = new Room("patio del castillo");
 
         salones = new Room("salones del castillo");
-        salones.addItem("Cofre","Cofre de oro uy valioso", 5);
+        salones.addItem("Cofre","Cofre de oro uy valioso", 5,true);
 
         aposentos = new Room("aposentos del rey");
-        aposentos.addItem("Llave","Llave de la mazmorra", 1);
+        aposentos.addItem("Llave","Llave de la mazmorra", 1,true);
+        aposentos.addItem("Cofre","Cofre de oro uy valioso", 5,true);
 
         torreon1 = new Room("primera torre");
 

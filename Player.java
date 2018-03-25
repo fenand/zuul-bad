@@ -125,6 +125,7 @@ public class Player
 
         if(currentRoom.getItem(objetoACoger) != null){
             if (currentRoom.getCantidadDeItems() > 0) {
+                if(currentRoom.getItem(objetoACoger).getSePuedeCoger()){
                 mochilo.add(currentRoom.getItem(objetoACoger));
                 pesoMochilo += currentRoom.getItem(objetoACoger).getItemWeight();
                 currentRoom.borrarItem(objetoACoger);
@@ -133,6 +134,10 @@ public class Player
             else{
                 System.out.println("La sala esta desierta, cambia de sala para encontrar algo!!");
             }
+        }
+        else{
+            System.out.println("Mochilas mochales,tu mochilo no acepta ese objeto");
+        }
         }
 
         else{

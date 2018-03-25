@@ -146,8 +146,8 @@ public class Room
      * 
      */
 
-    public void addItem(String iD,String itemDescription, float itemWeight){
-        items.add(new Item(iD,itemDescription,itemWeight));
+    public void addItem(String iD,String itemDescription, float itemWeight,boolean objetosQueSePuedenCoger){
+        items.add(new Item(iD,itemDescription,itemWeight,objetosQueSePuedenCoger));
     }
 
     /**
