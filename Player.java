@@ -16,7 +16,7 @@ public class Player
     private ArrayList<Item> mochilo;
 
     //Peso Maximo que puede llevar el jugador en una constante por eso va en mayusculas.
-    //private static final float PESO_MAXIMO = 50;
+    private static final float PESO_MAXIMO = 50;
 
     //peso que tiene en la mochilo actualmente
     private float pesoMochilo;
@@ -31,7 +31,7 @@ public class Player
     // junto con su peso total. Haz un commit dentro de la rama (commit r03).hecho --------
 
     // 4-Implementa la posibilidad de que el jugador pueda soltar objetos. 
-    // Haz un commit dentro de la rama (commit r04).
+    // Haz un commit dentro de la rama (commit r04).hecho----
 
     // 5-Implementa que el jugador pueda llevar objetos hasta un peso máximo especificado cuando se construye el jugador. 
     // El peso máximo que cada jugador puede llevar es un atributo del jugador. Haz un commit dentro de la rama (commit r05)
@@ -126,10 +126,16 @@ public class Player
         if(currentRoom.getItem(objetoACoger) != null){
             if (currentRoom.getCantidadDeItems() > 0){
                 if(currentRoom.getItem(objetoACoger).getSePuedeCoger()){
-                    mochilo.add(currentRoom.getItem(objetoACoger));
-                    pesoMochilo += currentRoom.getItem(objetoACoger).getItemWeight();
-                    currentRoom.borrarItem(objetoACoger);
-                    System.out.println("Has cogido este item: " + objetoACoger);
+                    if(pesoMochilo + currentRoom.getItem(objetoACoger).getItemWeight() <= PESO_MAXIMO){
+                        mochilo.add(currentRoom.getItem(objetoACoger));
+                        pesoMochilo += currentRoom.getItem(objetoACoger).getItemWeight();
+                        currentRoom.borrarItem(objetoACoger);
+                        System.out.println("Has cogido este item: " + objetoACoger);
+                    }
+                    else{
+                        System.out.println("Mochilas mochales,tu mochila esta llega no puedes cargar mas peso" + "\n" + "Limite de peso: " 
+                            + PESO_MAXIMO +"\n" + "Peso actual :" + pesoMochilo);
+                    }
                 }
                 else{
                     System.out.println("Mochilas mochales,tu mochilo no acepta ese objeto");
@@ -157,14 +163,17 @@ public class Player
         if(!mochilo.isEmpty()){
             for(Item objetosEnLaMochilo : mochilo){
                 System.out.println((contador + 1) + "- " + objetosEnLaMochilo.getID() + "\n" + "Cantidad de Items: " + objetosEnLaMochilo.getItemWeight()+ "\n" + 
-                "Peso Mochilo: "+ pesoMochilo);
+                    "Peso Mochilo: "+ pesoMochilo + "\n" 
+                    + "Capacidad mochilo: " + (PESO_MAXIMO - pesoMochilo));
                 contador++;
             }
         }
         else{
-            System.out.println("Mochilas mochales, No tienes objetos en tu MOCHILO" );
+            System.out.println("Mochilas mochales, No tienes objetos en tu MOCHILO" + "\n" 
+                + "Capacidad mochilo: " + (PESO_MAXIMO - pesoMochilo));
         }
     }
+
     /**
      * metodo para dejar objetos en las habitaciones
      */
@@ -190,5 +199,5 @@ public class Player
             }
         }
 
-}
+    }
 }

@@ -56,11 +56,11 @@ public class Game
         patio = new Room("patio del castillo");
 
         salones = new Room("salones del castillo");
-        salones.addItem("Cofre","Cofre de oro uy valioso", 5,true);
+        salones.addItem("Cofre","Cofre de oro uy valioso", 25,true);
 
         aposentos = new Room("aposentos del rey");
-        aposentos.addItem("Llave","Llave de la mazmorra", 1,true);
-        aposentos.addItem("Cofre","Cofre de oro uy valioso", 5,true);
+        aposentos.addItem("Llave","Llave de la mazmorra", 10,true);
+        aposentos.addItem("Cofre","Cofre de oro uy valioso", 25,true);
 
         torreon1 = new Room("primera torre");
 
