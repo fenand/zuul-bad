@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Class Room - a room in an adventure game.
@@ -12,7 +13,7 @@ import java.util.ArrayList;
  * east, south, west.  For each direction, the room stores a reference
  * to the neighboring room, or null if there is no exit in that direction.
  * 
- * @author  Michael KÃ¶lling and David J. Barnes y fernando
+ * @author  Michael Kölling and David J. Barnes y fernando
  * @version 09/03/2018
  */
 public class Room 
@@ -60,11 +61,11 @@ public class Room
     }
 
     /**
-     * Metodo denominado getExit que tome como parámetro una cadena que represente una dirección y devuelva el objeto de la clase Room asociado a esa salida o 
-     * null si no existe esa salida en dicha ubicación.
+     * Metodo denominado getExit que tome como par?metro una cadena que represente una direcci?n y devuelva el objeto de la clase Room asociado a esa salida o 
+     * null si no existe esa salida en dicha ubicaci?n.
      * 
      * @param tiene como parametro un String
-     * @return objeto de la clase Room asociado a esa salida o null si no existe esa salida en dicha ubicación
+     * @return objeto de la clase Room asociado a esa salida o null si no existe esa salida en dicha ubicaci?n
      */
     public Room getExit(String direccion){
         Room roomADevolver = null;
@@ -124,11 +125,11 @@ public class Room
      * Modificado el metodo para que devuelva todo los items mas la descripcion de las habitacones y sus objetos
      * @return A description of the room, including exits.
      */
-    //Creado el metodo getLongDescription en la clase Room para aplicar reponsability-driven design
+
     public String getLongDescription(){ 
-        //return "You are " + getDescription() + getExitString();
+
         String longDescription = "You are  " + getDescription() + "\n"  + getExitString() ;
-        //return longDescription;
+
         for(int cantidadDeItems = 0; cantidadDeItems < items.size(); cantidadDeItems++)
         {
             longDescription += "\n" + items.get(cantidadDeItems).getDescription();
@@ -137,14 +138,68 @@ public class Room
     }
 
     /**
-     * Metodo para añadir items al juego
+     * Metodo para a?adir items al juego
      * 
+     * @param id item
      * @param descripcion del item
      * @param cantidad de items o peso
+     * 
      */
 
-    public void addItem(String iD,String itemDescription, float itemWeight)
-    {
+    public void addItem(String iD,String itemDescription, float itemWeight){
         items.add(new Item(iD,itemDescription,itemWeight));
     }
+
+    /**
+     * metodo para saber si la coleccion estab vacias o no del array list de items
+     * 
+     * @return un boolean si para saber si la coleccion estan vacia o no
+     */
+    public boolean emptyItems(){
+        boolean booleanToReturn = false;
+        if(items.size() == 0){
+            booleanToReturn = true;
+        }
+        return booleanToReturn;
+    }
+
+    /**
+     * Metodo para elimitar items de la coleccion con in iterador
+     * @param string del item a borrar
+     */
+    public void borrarItem(String itemID){
+        Iterator<Item> borrarItems = items.iterator();
+        while(borrarItems.hasNext()){
+            Item item = borrarItems.next();
+            if(item.getID().equals(itemID)){
+                borrarItems.remove();
+            }
+        }
+    }
+
+    /**
+     * Metodo que devuelve un objeto Item que coincide con el parámetro escrito 
+     * 
+     * @param String del item que queremos buscar de la coleccion items
+     * @return item de la coleccion que coincide con el parametro 
+     */
+    public Item getItem(String itemID)
+    {
+        Item itemADevolver = null;
+        for(int i = 0; i < items.size(); i++){
+            if(items.get(i).getID().equals(itemID)){
+                itemADevolver = items.get(i);
+            }
+        }
+        return itemADevolver;
+    }
+
+    /**
+     * metodo para saber la cantidad de items que hay
+     * @return numerode items en la sala
+     */
+    public int getCantidadDeItems(){
+        return items.size();
+    }
+
 }

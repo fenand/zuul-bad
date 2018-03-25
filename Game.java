@@ -107,7 +107,7 @@ public class Game
 
         // comienzo del juego
 
-          return exterior;
+        return exterior;
 
     }
 
@@ -173,7 +173,18 @@ public class Game
         else if(commandWord.equals("back")){
             back();
         }
+        else if(commandWord.equals("take")){
+            player.take(command);
 
+        }
+        // else if(commandWord.equals("items")){
+        // player.objetosMochilo(command);
+
+        // }
+        // else if(commandWord.equals("drop")){
+        // player.drop(command);
+
+        // }
         return wantToQuit;
 
     }
@@ -227,7 +238,7 @@ public class Game
      * (acabas de comer y ya no tienes hambre).
      */
     private void eat(){
-        System.out.println("You have eaten now and you not hungry any more -- Acabas de comer y ya no tienes hambre");
+        player.eat();
     }
 
     /**
