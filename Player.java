@@ -21,7 +21,6 @@ public class Player
     //peso que tiene en la mochilo actualmente
     private float pesoMochilo;
 
-
     /**
      * Constructor for objects of class Player
      */
@@ -89,6 +88,7 @@ public class Player
     public void printLocationInfo(){ 
         System.out.println(currentRoom.getLongDescription());  
     }
+
     /**
      * Metodo para añadir items al inventario
      * @param un item que es un obejeto item
@@ -107,14 +107,22 @@ public class Player
         }
 
         String objetoACoger = command.getSecondWord();
+
         if(currentRoom.getItem(objetoACoger) != null){
-            if (currentRoom.getCantidadDeItems() > 0) {
-                mochilo.add(currentRoom.getItem(objetoACoger));
-                pesoMochilo += currentRoom.getItem(objetoACoger).getItemWeight();
-                currentRoom.borrarItem(objetoACoger);
-                System.out.println("Has cogido este item: " + objetoACoger);
+            if (currentRoom.getCantidadDeItems() > 0){
+                if(currentRoom.getItem(objetoACoger).getSePuedeCoger()){
+
+                    mochilo.add(currentRoom.getItem(objetoACoger));
+                    pesoMochilo += currentRoom.getItem(objetoACoger).getItemWeight();
+                    currentRoom.borrarItem(objetoACoger);
+                    System.out.println("Has cogido este item: " + objetoACoger);
+                }
+                else{
+                    System.out.println("Mochilas mochales,tu mochilo no acepta ese objeto");
+                }
             }
             else{
+
                 System.out.println("La sala esta desierta, cambia de sala para encontrar algo!!");
             }
         }
@@ -122,7 +130,5 @@ public class Player
         else{
             System.out.println("El objeto no existe!!");
         }
-
     }
-
 }
