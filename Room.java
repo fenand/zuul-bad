@@ -149,89 +149,64 @@ public class Room
      * 
      */
 
-    public void addItem(String iD,String itemDescription, float itemWeight){
-        items.add(new Item(iD,itemDescription,itemWeight));
+    public void addItem(String iD,String itemDescription, float itemWeight,boolean objetosQueSePuedenCoger ){
+        items.add(new Item(iD,itemDescription,itemWeight,objetosQueSePuedenCoger));
     }
 
-    // /**
-    // * metodo para saber si la coleccion estab vacias o no del array list de items
-    // * 
-    // * @return un boolean si para saber si la coleccion estan vacia o no
-    // */
-    // public boolean emptyItems(){
-    // boolean booleanToReturn = false;
-    // if(items.size() == 0){
-    // booleanToReturn = true;
-    // }
-    // return booleanToReturn;
-    // }
+    /**
+     * metodo para saber si la coleccion estab vacias o no del array list de items
+     * 
+     * @return un boolean si para saber si la coleccion estan vacia o no
+     */
+    public boolean emptyItems(){
+        boolean booleanToReturn = false;
+        if(items.size() == 0){
+            booleanToReturn = true;
+        }
+        return booleanToReturn;
+    }
 
-    // /**
-    // * Metodo para elimitar items de la coleccion con in iterador
-    // * @param string del item a borrar
+    /**
+     * Metodo para elimitar items de la coleccion con in iterador
+     * @param string del item a borrar
+     */
+    public void borrarItem(String itemID){
+        Iterator<Item> borrarItems = items.iterator();
+        while(borrarItems.hasNext()){
+            Item item = borrarItems.next();
+            if(item.getID().equals(itemID)){
+                borrarItems.remove();
+            }
+        }
+    }
 
-    // */
-    // public void borrarItem(String itemID){
-    // Iterator<Item> borrarItems = items.iterator();
-    // while(borrarItems.hasNext()){
-    // Item item = borrarItems.next();
-    // if(item.getID().equals(itemID)){
-    // borrarItems.remove();
-    // }
-    // }
-    // }
 
-    // public void addItem(String iD,String itemDescription, float itemWeight)
-    // {
-    // items.add(new Item(iD,itemDescription,itemWeight));}
+    /**
+     * Metodo que devuelve un objeto Item que coincide con el parámetro escrito 
+     * 
+     * @param String del item que queremos buscar de la coleccion items
+     * @return item de la coleccion que coincide con el parametro 
+     */
+    public Item getItem(String itemID)
+    {
+        Item itemADevolver = null;
+        for(int i = 0; i < items.size(); i++){
+            if(items.get(i).getID().equals(itemID)){
+                itemADevolver = items.get(i);
+            }
+        }
+        return itemADevolver;
 
-    // public void addItem(String itemDescription, float itemWeight , boolean objetosQueSePuedenCoger)
-    // {
-    // items.put(itemDescription,new Item(itemDescription,itemWeight,objetosQueSePuedenCoger));
-    // }
+    }
 
-    // /**
-    // * metodo para devolver el item que pasas por parametro
-    // * @param item que quieres devolver
-    // * @return item devuelto
-    // */
-    // public Item getItem(String item){
-    // return items.get(item);}
+    /**
+     * metodo para saber la cantidad de items que hay
+     * @return numerode items en la sala
+     */
+    public int getCantidadDeItems(){
+        return items.size();
 
-    // /**
-    // * Metodo que devuelve un objeto Item que coincide con el parámetro escrito 
-    // * 
-    // * @param String del item que queremos buscar de la coleccion items
-    // * @return item de la coleccion que coincide con el parametro 
-    // */
-    // public Item getItem(String itemID)
-    // {
-    // Item itemADevolver = null;
-    // for(int i = 0; i < items.size(); i++){
-    // if(items.get(i).getID().equals(itemID)){
-    // itemADevolver = items.get(i);
-    // }
-    // }
-    // return itemADevolver;
+    }
 
-    // }
-
-    // /**
-    // * metodo para saber la cantidad de items que hay
-    // * @return numerode items en la sala
-    // */
-    // public int getCantidadDeItems(){
-    // return items.size();
-
-    // }
-
-    // /**
-    // * metodo para remover el item de la sala que indiquemos por parametro
-    // * @param item a borrar por parametro
-    // */
-    // public void borrarItem(String item){
-    // items.remove(item);
-
-    // }
 
 }
