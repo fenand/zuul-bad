@@ -187,7 +187,7 @@ public class Game
             player.objetosMochilo(command);            
         }
         else if(commandWord.equals("drop")){
-            player.drop(command);           
+            player.drop(command);          
         }
 
         return wantToQuit;
@@ -212,9 +212,7 @@ public class Game
      * the new room, otherwise print an error message.
      */
     private void goRoom(Command command){
-
         player.goRoom(command);
-
     }
 
     /** 
