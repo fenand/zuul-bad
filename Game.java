@@ -180,15 +180,15 @@ public class Game
         else if(commandWord.equals("back")){
             back();
         }
-        // else if(commandWord.equals("take")){
-        // take(command);           
-        // }
-        // else if(commandWord.equals("items")){
-        // objetosMochilo(command);            
-        // }
-        // else if(commandWord.equals("drop")){
-        // drop(command);           
-        // }
+        else if(commandWord.equals("take")){
+            player.take(command);           
+        }
+        else if(commandWord.equals("items")){
+            player.objetosMochilo(command);            
+        }
+        else if(commandWord.equals("drop")){
+            player.drop(command);           
+        }
 
         return wantToQuit;
 

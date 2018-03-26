@@ -109,9 +109,8 @@ public class Player
         String objetoACoger = command.getSecondWord();
 
         if(currentRoom.getItem(objetoACoger) != null){
-            if (currentRoom.getCantidadDeItems() > 0){
+            if (currentRoom.getCantidadDeItems() > 0) {
                 if(currentRoom.getItem(objetoACoger).getSePuedeCoger()){
-
                     mochilo.add(currentRoom.getItem(objetoACoger));
                     pesoMochilo += currentRoom.getItem(objetoACoger).getItemWeight();
                     currentRoom.borrarItem(objetoACoger);
@@ -122,7 +121,6 @@ public class Player
                 }
             }
             else{
-
                 System.out.println("La sala esta desierta, cambia de sala para encontrar algo!!");
             }
         }
@@ -130,5 +128,51 @@ public class Player
         else{
             System.out.println("El objeto no existe!!");
         }
+
+    }
+
+    /**
+     * metodo para imprimir los items que tengo en la mochila
+     */
+    public void objetosMochilo(Command command){
+        int contador = 0;
+
+        if(!mochilo.isEmpty()){
+            for(Item objetosEnLaMochilo : mochilo){
+                System.out.println((contador + 1) + "- " + objetosEnLaMochilo.getID() + "\n" + "Cantidad de Items: " + objetosEnLaMochilo.getItemWeight()+ "\n" + 
+                    "Peso Mochilo: "+ pesoMochilo);
+                contador++;
+            }
+        }
+        else{
+            System.out.println("Mochilas mochales, No tienes objetos en tu MOCHILO" );
+        }
+    }
+
+    /**
+     * metodo para dejar objetos en las habitaciones
+     */
+    public void drop(Command command){
+        if(!command.hasSecondWord()){
+            System.out.println("Escribe el objeto que quieres dejar!!");
+            return;
+        }
+
+        String objetoADejar = command.getSecondWord();
+
+        int objeto = 0;
+        boolean objetoSoltado = false;
+        for(int i = 0 ; i < mochilo.size() ; i++ ){
+            if(mochilo.get(i).getID().equalsIgnoreCase(objetoADejar)){
+                objeto = i;
+                pesoMochilo -= mochilo.get(objeto).getItemWeight();
+                currentRoom.addItem(mochilo.get(objeto).getID(),mochilo.get(objeto).getItemDescription(), mochilo.get(objeto).getItemWeight(), true);
+                mochilo.remove(objeto);
+            }
+            else{
+                System.out.println("No puedes dejar un objeto que no tienes en tu mochilo");
+            }
+        }
+
     }
 }
