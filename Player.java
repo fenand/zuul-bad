@@ -1,6 +1,6 @@
 import java.util.Stack;
 import java.util.ArrayList;
-
+import java.util.Random;
 /**
  * clase player encargada de ejecuta los comandos del juego y no game como teniamos antes
  * 
@@ -54,6 +54,26 @@ public class Player
             rooms.push(currentRoom);
             currentRoom = nextRoom;
             printLocationInfo();
+        }
+    }
+
+    /** 
+     * metodo para que mover el rey aleatoriamente por el juego en las direcciones indicadas en el array de dirrecciones y
+     * que solo pueda moverse en las habitaciones que tengan la misma descripcion indicada en la condicion de moverse
+     */
+    public void goRoomRey(){
+        String[] posiblesDirecciones = {"north", "west", "east", "south"};
+        boolean direccionBuena = false;
+        Random rng = new Random();
+        while (!direccionBuena){
+            int testing = rng.nextInt(4);
+            Room nextRoom = currentRoom.getExit(posiblesDirecciones[testing]);
+            if (nextRoom != null){
+                if (nextRoom.getDescription().equalsIgnoreCase("aposentos") || nextRoom.getDescription().equalsIgnoreCase("salones") || nextRoom.getDescription().equalsIgnoreCase("torreon1") || nextRoom.getDescription().equalsIgnoreCase("torreon2")){
+                    currentRoom = nextRoom;
+                    direccionBuena = true;
+                }
+            }
         }
     }
 
@@ -182,6 +202,13 @@ public class Player
             }
         }
 
+    }
+
+    /**
+     * metodo para saber la habitacion que estamos
+     */
+    public Room getCurrentRoom(){
+        return currentRoom;
     }
 }
 
