@@ -1,3 +1,5 @@
+import java.util.Random;
+import java.util.Arrays;
 
 /**
  *  This class is the main class of the "World of Zuul" application. 
@@ -20,6 +22,8 @@ public class Game
 {
     private Parser parser;
     private Player player;
+    private boolean seUsacomando;
+    private Player rey;
 
     /**
      * Create the game and initialise its internal map.
@@ -27,7 +31,6 @@ public class Game
     public Game(){
         parser = new Parser();
         player = new Player(createRooms());
-
     }
 
     /**
@@ -36,41 +39,34 @@ public class Game
     private Room createRooms(){
 
         //objetos room
-        Room exterior,foso1, foso2, muralla, patio, salones, aposentos, torreon1, torreon2, mazmorras;
-
-        // // ccreamos las rooms  y objetos mas peso de los objetos
-        // ahora los items son añadidos desde el array de items creado en la clase Item llamando al metodo additem de la clase room
+        Room exterior, foso1, foso2, muralla, patio, salones, aposentos, torreon1, torreon2, mazmorras;
 
         exterior = new Room("parte exterior del castillo");
 
-        foso1 = new Room("foso");
+        foso1 = new Room("foso1");
         foso1.addItem("Serpientes","Serpientes con mordeduras muy venenosas", 20,false);
 
-        foso2 = new Room("foso");
+        foso2 = new Room("foso2");
         foso2.addItem("Cocodrilos","Cocodrilos hambrientos y muy feroces", 20,false);
         foso2.addItem("Serpientes","Serpientes con mordeduras muy venenosas", 20,false);
 
         muralla = new Room("muralla del castillo");
         muralla.addItem("Soldados","Solados muy feroces", 10,false);
 
-        foso2 = new Room("foso");
-        foso2.addItem("Cocodrilos","Cocodrilos hambrientos y muy feroces", 20,false);
-        foso2.addItem("Serpientes","Serpientes con mordeduras muy venenosas", 20,false);
-
         patio = new Room("patio del castillo");
 
-        salones = new Room("salones del castillo");
+        salones = new Room("salones");
         salones.addItem("Cofre","Cofre de oro uy valioso", 25,true);
 
-        aposentos = new Room("aposentos del rey");
+        aposentos = new Room("aposentos");
         aposentos.addItem("Llave","Llave de la mazmorra", 1,true);
         aposentos.addItem("Cofre","Cofre de oro uy valioso", 25,true);
 
-        torreon1 = new Room("primera torre");
+        torreon1 = new Room("torreon1");
         torreon1.addItem("Cofre","cofre_de_oro", 35,true);
         torreon1.addItem("Cofre","cofre_de_plata", 25,true);
 
-        torreon2 = new Room("segundo torreon");
+        torreon2 = new Room("torreon2");
 
         mazmorras = new Room("la mazmorrra");
 
@@ -112,8 +108,26 @@ public class Game
 
         mazmorras.setExit("north",patio );
 
-        // comienzo del juego
+        // Room[] habitaciones = {salones, aposentos, torreon1, torreon2};
 
+        // // for (Room posibleRoomRey : habitaciones){
+        // // if (posibleRoomRey.getItem("Rey") != null){
+        // // posibleRoomRey.borrarItem("Rey");
+        // // }
+        // // }
+
+        // //creamos un array de habitaciones para que el random seleccione las habitaciones aleatorias para que se cree el rey
+        // Random salaRey = new Random();
+
+        // habitaciones[salaRey.nextInt(4)].addItem("Rey", "Rey del castillo", 1, true);
+
+        // // if(seUsacomando){
+
+        // // habitaciones[salaRey.nextInt(4)].addItem("Rey", "Rey del castillo", 1, true);
+        // // seUsacomando = false;
+        // // }
+
+        rey = new Player(aposentos);
         return exterior;
 
     }
@@ -156,6 +170,7 @@ public class Game
         if(command.isUnknown()){
             System.out.println("I don't know what you mean...");
             return false;
+
         }
 
         String commandWord = command.getCommandWord();
@@ -165,29 +180,52 @@ public class Game
         }
         else if (commandWord.equals("go")){
             goRoom(command);
+
         }
         else if (commandWord.equals("quit")){
             wantToQuit = quit(command);
         }
         else if(commandWord.equals("look")){
             look();
+
         }
 
         else if(commandWord.equals("eat")){
-            eat();
+            player.eat();
         }
 
         else if(commandWord.equals("back")){
-            back();
+            player.goBack();
+
         }
         else if(commandWord.equals("take")){
-            player.take(command);           
+            player.take(command); 
+
         }
         else if(commandWord.equals("items")){
             player.objetosMochilo(command);            
         }
         else if(commandWord.equals("drop")){
-            player.drop(command);          
+            player.drop(command); 
+
+        }
+        else if(commandWord.equals("kill")){
+            wantToQuit = kill();
+            
+
+        }
+
+        String[] comandos = {"go","back"};
+        for (String comando : comandos){
+            if (commandWord.equals(comando)){
+                // comando valido - se actualiza la posicion del rey
+                rey.goRoomRey();
+
+                if (player.getCurrentRoom().equals(rey.getCurrentRoom())){
+                    System.out.println("EL REY ESTA EN LA MISMA HABITACIOOON!");
+                }
+
+            }
         }
 
         return wantToQuit;
@@ -238,19 +276,16 @@ public class Game
     }
 
     /**
-     * Metodo para añadir el comando eat (comer) que, al ejecutarse, 
-     * se limite a imprimir el mensaje "You have eaten now and you are not hungry any more" 
-     * (acabas de comer y ya no tienes hambre).
+     * metodo para matar al rey con el comando kill
      */
-    private void eat(){
-        player.eat();
-    }
+    private boolean kill(){
+        boolean auxPlataOPlomo = false;
+        if(player.getCurrentRoom().equals(rey.getCurrentRoom())){
 
-    /**
-     * comando back
-     */
-    private void back(){
-        player.goBack();
+            System.out.println("El pendejo del rey murio!");
+            System.out.println("GANASTE!!!");
+            auxPlataOPlomo =  true;
+        }
+        return auxPlataOPlomo;
     }
 }
-

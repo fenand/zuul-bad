@@ -180,7 +180,6 @@ public class Room
         }
     }
 
-
     /**
      * Metodo que devuelve un objeto Item que coincide con el parámetro escrito 
      * 
@@ -196,7 +195,6 @@ public class Room
             }
         }
         return itemADevolver;
-
     }
 
     /**
@@ -205,8 +203,6 @@ public class Room
      */
     public int getCantidadDeItems(){
         return items.size();
-
     }
-
 
 }
